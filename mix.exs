@@ -1,13 +1,22 @@
 defmodule Harmonium.MixProject do
   use Mix.Project
 
+  @github "https://github.com/revelrylabs/phoenix_harmonium"
+
   def project do
     [
       app: :harmonium,
       version: "0.1.0",
       elixir: "~> 1.6",
       start_permanent: Mix.env() == :prod,
-      deps: deps()
+      deps: deps(),
+
+      # Docs
+      name: "Harmonium",
+      source_url: @github,
+      homepage_url: @github,
+      # The main page in the docs
+      docs: [main: "Harmonium", extras: ["README.md"]]
     ]
   end
 
@@ -21,10 +30,21 @@ defmodule Harmonium.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      # {:dep_from_hexpm, "~> 0.3.0"},
-      # {:dep_from_git, git: "https://github.com/elixir-lang/my_dep.git", tag: "0.1.0"},
       {:phoenix_html, "~> 2.11.0"},
+      {:excoveralls, "~> 0.8.0", only: :test},
       {:phoenix_ecto, "~> 3.0", only: :test}
+    ]
+  end
+
+  defp package do
+    [
+      files: ["lib", "mix.exs", "README.md", "LICENSE", "CHANGELOG.md"],
+      maintainers: ["Joel Wietelmann"],
+      licenses: ["MIT"],
+      links: %{
+        "GitHub" => @github
+      },
+      build_tools: ["mix"]
     ]
   end
 end
