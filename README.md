@@ -8,8 +8,7 @@ Phoenix view helpers for grid layouts, well-styled forms, and more.
 
 ## Installation
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `harmonium` to your list of dependencies in `mix.exs`:
+Add `harmonium` to your list of dependencies in `mix.exs` before running `mix deps.get`:
 
 ```elixir
 def deps do
@@ -19,6 +18,42 @@ def deps do
 end
 ```
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/harmonium](https://hexdocs.pm/harmonium).
+From your app's root directory, run this command to get the `harmonium` package from NPM, which contains the SCSS you'll need:
+
+```
+$(cd assets && npm install --save harmonium)
+```
+
+In `assets/app.scss`, import the SCSS:
+```
+@import '~harmonium/scss/app';
+```
+
+For more details, and a set of Starter Settings for configuring Harmonium styles, go to: https://harmonium.revelry.co/
+
+## Example Usage
+```
+<%= form_for @changeset, @action, fn f -> %>
+  <%= row do %>
+    <%= col medium: 6, large: 4 do %>
+      <%= text_input_stack f, :username, label: "Username", help: "Pick a good one. You can't change it later." %>
+    <% end %>
+    <%= col medium: 6, large: 4 do %>
+      <%= password_input_stack f, :password, label: "Password", help: "Make it strong!" %>
+    <% end %>
+    <%= col medium: 6, large: 4 do %>
+      <%= password_input_stack f, :password, label: "Password (confirm)", help: "Type it again." %>
+    <% end %>
+  <% end %>
+  <%= row do %>
+    <%= col do %>
+      <%= single_checkbox f, :subscribe_to_newsletter, label: "Please, please, please subscribe to my newsletter." %>
+    <% end %>
+  <% end %>
+  <%= row do %>
+    <%= col do %>
+      <%= submit "Save", class: button_class(expanded: true) %>
+    <% end %>
+  <% end %>
+<% end %>
+```
