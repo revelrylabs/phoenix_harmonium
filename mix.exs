@@ -40,6 +40,7 @@ defmodule Harmonium.MixProject do
 
   defp package do
     [
+      description: "Styled UI component helpers for Phoenix",
       files: ["lib", "mix.exs", "README.md", "LICENSE", "CHANGELOG.md"],
       maintainers: ["Joel Wietelmann"],
       licenses: ["MIT"],
