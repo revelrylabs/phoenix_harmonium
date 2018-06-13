@@ -34,7 +34,8 @@ defmodule Harmonium.MixProject do
     [
       {:phoenix_html, "~> 2.11.0"},
       {:excoveralls, "~> 0.8.0", only: :test},
-      {:phoenix_ecto, "~> 3.0", only: :test}
+      {:phoenix_ecto, "~> 3.0", only: :test},
+      {:ex_doc, "~> 0.18.1", only: :dev}
     ]
   end
 
