@@ -205,7 +205,7 @@ defmodule Harmonium do
   end
 
   @doc """
-  Renders an input label inner <span>.
+  Renders an input label inner `<span>`.
   """
   def rev_label_text(do: block) do
     content_tag :span, class: @label_text_class do
@@ -214,7 +214,7 @@ defmodule Harmonium do
   end
 
   @doc """
-  Renders an input error <small>.
+  Renders an input error `<small>`.
   """
   def rev_error_text(do: block) do
     content_tag :small, class: @error_class do
@@ -223,7 +223,7 @@ defmodule Harmonium do
   end
 
   @doc """
-  Renders an input help <small>.
+  Renders an input help `<small>`.
   """
   def rev_help_text(do: block) do
     content_tag :small, class: @help_class do
@@ -308,7 +308,7 @@ defmodule Harmonium do
       iex> text_input_stack(f, :required_string, help: "This field is required.") |> safe_to_string()
       "<label class=\\\"rev-InputLabel rev-InputStack \\\">  \\n  <input class=\\\"rev-Input \\\" id=\\\"widget_required_string\\\" name=\\\"widget[required_string]\\\" type=\\\"text\\\" value=\\\"hello\\\">\\n  \\n  <small class=\\\"rev-HelpText rev-InputHelpText\\\">This field is required.</small>\\n</label>"
 
-  The :input option passes another set of options through to the `<input>` field.
+  The `:input` option passes another set of options through to the `<input>` field.
 
       iex> text_input_stack(f, :required_string, input: [placeholder: "Required String"]) |> safe_to_string()
       "<label class=\\\"rev-InputLabel rev-InputStack \\\">  \\n  <input class=\\\"rev-Input \\\" id=\\\"widget_required_string\\\" name=\\\"widget[required_string]\\\" placeholder=\\\"Required String\\\" type=\\\"text\\\" value=\\\"hello\\\">\\n  \\n  \\n</label>"
@@ -374,13 +374,13 @@ defmodule Harmonium do
   @doc """
   Render a single checkbox.
 
-    iex> single_checkbox(f, :bool) |> safe_to_string()
-    "<label class=\\\"rev-InputLabel rev-Checkbox\\\"><input name=\\\"widget[bool]\\\" type=\\\"hidden\\\" value=\\\"false\\\"><input class=\\\"rev-Checkbox-input\\\" id=\\\"widget_bool\\\" name=\\\"widget[bool]\\\" type=\\\"checkbox\\\" value=\\\"true\\\"></label>"
+      iex> single_checkbox(f, :bool) |> safe_to_string()
+      "<label class=\\\"rev-InputLabel rev-Checkbox\\\"><input name=\\\"widget[bool]\\\" type=\\\"hidden\\\" value=\\\"false\\\"><input class=\\\"rev-Checkbox-input\\\" id=\\\"widget_bool\\\" name=\\\"widget[bool]\\\" type=\\\"checkbox\\\" value=\\\"true\\\"></label>"
 
   You may optionally add a label:
 
-    iex> single_checkbox(f, :bool, label: "Publish?") |> safe_to_string()
-    "<label class=\\\"rev-InputLabel rev-Checkbox\\\"><input name=\\\"widget[bool]\\\" type=\\\"hidden\\\" value=\\\"false\\\"><input class=\\\"rev-Checkbox-input\\\" id=\\\"widget_bool\\\" name=\\\"widget[bool]\\\" type=\\\"checkbox\\\" value=\\\"true\\\"><span class=\\\"rev-Checkbox-label\\\">Publish?</span></label>"
+      iex> single_checkbox(f, :bool, label: "Publish?") |> safe_to_string()
+      "<label class=\\\"rev-InputLabel rev-Checkbox\\\"><input name=\\\"widget[bool]\\\" type=\\\"hidden\\\" value=\\\"false\\\"><input class=\\\"rev-Checkbox-input\\\" id=\\\"widget_bool\\\" name=\\\"widget[bool]\\\" type=\\\"checkbox\\\" value=\\\"true\\\"><span class=\\\"rev-Checkbox-label\\\">Publish?</span></label>"
   """
   def single_checkbox(f, key, options \\ []) do
     input_options =
@@ -409,13 +409,13 @@ defmodule Harmonium do
   @doc """
   Render a single radio button.
 
-    iex> single_radio_button(f, :required_string, "one") |> safe_to_string()
-    "<label class=\\\"rev-InputLabel rev-Radio\\\"><input class=\\\"rev-Radio-input\\\" id=\\\"widget_required_string_one\\\" name=\\\"widget[required_string]\\\" type=\\\"radio\\\" value=\\\"one\\\"></label>"
+      iex> single_radio_button(f, :required_string, "one") |> safe_to_string()
+      "<label class=\\\"rev-InputLabel rev-Radio\\\"><input class=\\\"rev-Radio-input\\\" id=\\\"widget_required_string_one\\\" name=\\\"widget[required_string]\\\" type=\\\"radio\\\" value=\\\"one\\\"></label>"
 
   You may optionally add a label:
 
-    iex> single_radio_button(f, :required_string, "one", label: "Option One") |> safe_to_string()
-    "<label class=\\\"rev-InputLabel rev-Radio\\\"><input class=\\\"rev-Radio-input\\\" id=\\\"widget_required_string_one\\\" name=\\\"widget[required_string]\\\" type=\\\"radio\\\" value=\\\"one\\\"><span class=\\\"rev-Radio-label\\\">Option One</span></label>"
+      iex> single_radio_button(f, :required_string, "one", label: "Option One") |> safe_to_string()
+      "<label class=\\\"rev-InputLabel rev-Radio\\\"><input class=\\\"rev-Radio-input\\\" id=\\\"widget_required_string_one\\\" name=\\\"widget[required_string]\\\" type=\\\"radio\\\" value=\\\"one\\\"><span class=\\\"rev-Radio-label\\\">Option One</span></label>"
   """
   def single_radio_button(f, key, value, options \\ []) do
     input_options =
