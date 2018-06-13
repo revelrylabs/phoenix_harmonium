@@ -4,7 +4,7 @@
 [![Hex.pm](https://img.shields.io/hexpm/dt/harmonium.svg)](https://hex.pm/packages/harmonium)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-**TODO: Add description**
+Phoenix view helpers for grid layouts, well-styled forms, and more.
 
 ## Installation
 
