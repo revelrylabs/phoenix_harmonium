@@ -10,6 +10,7 @@ defmodule Harmonium.MixProject do
       elixir: "~> 1.6",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
+      test_coverage: [tool: ExCoveralls],
 
       # Docs
       name: "Harmonium",
