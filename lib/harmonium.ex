@@ -1,12 +1,6 @@
 defmodule Harmonium do
   @moduledoc """
-  Phoenix Framework view helpers for Harmonium-styled HTML.
-
-  Harmonium is a Sass and React package in NPM that provides styled UI components (https://harmonium.revelry.co).
-  However, sometimes React is too much.
-  Sometimes you just want a nice set of UI style shortcuts without all that JavaScript.
-
-  This module uses Harmonium styles to provide HTML grid helpers, form helpers, and more.
+  Styled HTML grid helpers, form helpers, and more.
   """
 
   import Phoenix.HTML

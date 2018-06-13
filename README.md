@@ -4,7 +4,15 @@
 [![Hex.pm](https://img.shields.io/hexpm/dt/harmonium.svg)](https://hex.pm/packages/harmonium)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-Phoenix view helpers for grid layouts, well-styled forms, and more.
+Phoenix Framework view helpers for Harmonium-styled HTML without React.
+
+Harmonium was originally conceived as a set of styled React components ([harmonium.revelry.co](https://harmonium.revelry.co/)). This library brings the style and markup framework of Harmonium into Phoenix, but leaves the JavaScript behind.
+
+Here are a just few of the features:
+
+* Flexible grid layout system
+* Enhanced form helpers that decorate your inputs with errors and help text in a uniform way
+* Functions for inserting just the right CSS class names, for those moments when you want to go off the pre-built path
 
 ## Installation
 
@@ -20,19 +28,19 @@ end
 
 From your app's root directory, run this command to get the `harmonium` package from NPM, which contains the SCSS you'll need:
 
-```
+```bash
 $(cd assets && npm install --save harmonium)
 ```
 
 In `assets/app.scss`, import the SCSS:
-```
+```scss
 @import '~harmonium/scss/app';
 ```
 
-For more details, and a set of Starter Settings for configuring Harmonium styles, go to: https://harmonium.revelry.co/
+For more details, and a set of Starter Settings for configuring Harmonium styles, go to [harmonium.revelry.co](https://harmonium.revelry.co/)
 
 ## Example Usage
-```
+```elixir
 <%= form_for @changeset, @action, fn f -> %>
   <%= row do %>
     <%= col medium: 6, large: 4 do %>

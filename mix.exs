@@ -18,7 +18,7 @@ defmodule Harmonium.MixProject do
       source_url: @github,
       homepage_url: @github,
       # The main page in the docs
-      docs: [main: "Harmonium", extras: ["README.md"]]
+      docs: [main: "readme", extras: ["README.md"]]
     ]
   end
 
