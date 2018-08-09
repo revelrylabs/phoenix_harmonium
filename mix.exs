@@ -32,7 +32,7 @@ defmodule Harmonium.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:phoenix_html, "~> 2.11.0"},
+      {:phoenix_html, "~> 2.11"},
       {:excoveralls, "~> 0.8.0", only: :test},
       {:phoenix_ecto, "~> 3.0", only: :test},
       {:ex_doc, "~> 0.18.1", only: :dev}
