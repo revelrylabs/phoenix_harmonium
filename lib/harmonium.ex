@@ -15,11 +15,14 @@ defmodule Harmonium do
   @label_class "rev-InputLabel"
   @label_text_class "rev-LabelText"
   @input_class "rev-Input"
+  @textarea_class "rev-Textarea"
   @select_class "rev-Select"
   @error_class "rev-InputErrors"
   @invalid_class "is-invalid"
   @help_class "rev-HelpText rev-InputHelpText"
-  @stack_class "rev-InputStack"
+  @input_stack_class "rev-InputStack"
+  @textarea_stack_class "rev-TextareaStack"
+  @select_stack_class "rev-SelectStack"
   @button_class "rev-Button"
   @button_group_class "rev-ButtonGroup"
   @card_class "rev-Card"
@@ -237,7 +240,7 @@ defmodule Harmonium do
   # See `text_input_stack/3` and `select_stack/4` for example usage.
   # For other, less uniform input types, you may have to write something more custom.
   # In those cases, this function's code can still be a good reference example.
-  defp input_stack(func, input_class, f, key, options, value_options \\ nil) do
+  defp input_stack(func, input_class, stack_class, f, key, options, value_options \\ nil) do
     error = extract_error(f, key)
 
     validity_class = if error, do: @invalid_class, else: ""
@@ -271,7 +274,7 @@ defmodule Harmonium do
         value -> rev_help_text(do: value)
       end
 
-    rev_label class: "#{@stack_class} #{validity_class}" do
+    rev_label class: "#{stack_class} #{validity_class}" do
       ~E"""
         <%= label_text %>
         <%= input %>
@@ -313,56 +316,82 @@ defmodule Harmonium do
       "<label class=\\\"rev-InputLabel rev-InputStack is-invalid\\\">  \\n  <input class=\\\"rev-Input is-invalid\\\" id=\\\"widget_required_string\\\" name=\\\"widget[required_string]\\\" type=\\\"text\\\">\\n  <small class=\\\"rev-InputErrors\\\">can&#39;t be blank</small>\\n  \\n</label>"
   """
   def text_input_stack(f, key, options \\ []) do
-    input_stack(&text_input/3, @input_class, f, key, options)
+    input_stack(&text_input/3, @input_class, @input_stack_class, f, key, options)
   end
 
   @doc """
   See `text_input_stack/3`.
   """
   def password_input_stack(f, key, options \\ []) do
-    input_stack(&password_input/3, @input_class, f, key, options)
+    input_stack(&password_input/3, @input_class, @input_stack_class, f, key, options)
   end
 
   @doc """
-  See `text_input_stack/3` for usage.
+  Renders a textarea stack.
+
+      iex> textarea_stack(f, :required_string) |> safe_to_string()
+      "<label class=\\\"rev-InputLabel rev-TextareaStack \\\">  \\n  <textarea class=\\\"rev-Textarea \\\" id=\\\"widget_required_string\\\" name=\\\"widget[required_string]\\\">\\nhello</textarea>\\n  \\n  \\n</label>"
+
+  See `text_input_stack/3` for more options.
   """
   def textarea_stack(f, key, options \\ []) do
-    input_stack(&textarea/3, @input_class, f, key, options)
+    input_stack(&textarea/3, @textarea_class, @textarea_stack_class, f, key, options)
   end
 
   @doc """
-  See `text_input_stack/3` for usage.
+  Renders an email input stack.
+
+      iex> text_input_stack(f, :required_string) |> safe_to_string()
+      "<label class=\\\"rev-InputLabel rev-InputStack \\\">  \\n  <input class=\\\"rev-Input \\\" id=\\\"widget_required_string\\\" name=\\\"widget[required_string]\\\" type=\\\"text\\\" value=\\\"hello\\\">\\n  \\n  \\n</label>"
+
+  See `text_input_stack/3` for more options.
   """
   def email_input_stack(f, key, options \\ []) do
-    input_stack(&email_input/3, @input_class, f, key, options)
+    input_stack(&email_input/3, @input_class, @input_stack_class, f, key, options)
   end
 
   @doc """
-  See `text_input_stack/3` for usage.
+  Renders a number input stack.
+
+      iex> text_input_stack(f, :required_string) |> safe_to_string()
+      "<label class=\\\"rev-InputLabel rev-InputStack \\\">  \\n  <input class=\\\"rev-Input \\\" id=\\\"widget_required_string\\\" name=\\\"widget[required_string]\\\" type=\\\"text\\\" value=\\\"hello\\\">\\n  \\n  \\n</label>"
+
+  See `text_input_stack/3` for more options.
   """
   def number_input_stack(f, key, options \\ []) do
-    input_stack(&number_input/3, @input_class, f, key, options)
+    input_stack(&number_input/3, @input_class, @input_stack_class, f, key, options)
   end
 
   @doc """
   Similar usage to `text_input_stack/3`, but it also passes `value_options` through to `Phoenix.HTML.Form.select/4`.
+
+    iex> select_stack(f, :required_string, ["Hi": "hi", "Hello": "hello"]) |> safe_to_string()
+    "<label class=\\\"rev-InputLabel rev-SelectStack \\\">  \\n  <select class=\\\"rev-Select \\\" id=\\\"widget_required_string\\\" name=\\\"widget[required_string]\\\"><option value=\\\"hi\\\">Hi</option><option value=\\\"hello\\\" selected>Hello</option></select>\\n  \\n  \\n</label>"
+
+  See `text_input_stack/3` for more options.
   """
   def select_stack(f, key, value_options, options \\ []) do
-    input_stack(&select/4, @select_class, f, key, options, value_options)
+    input_stack(&select/4, @select_class, @select_stack_class, f, key, options, value_options)
   end
 
   @doc """
-  Same as `select_stack/4`, but renders the input as a `<select multiple>`.
+  Same as `select_stack/4`, but renders the input as a `<select multiple>` and submits the list of all selected options.
+
+    iex> multiple_select_stack(f, :required_string, ["Hi": "hi", "Hello": "hello"]) |> safe_to_string()
+    "<label class=\\\"rev-InputLabel rev-SelectStack \\\">  \\n  <select class=\\\"rev-Select \\\" id=\\\"widget_required_string\\\" multiple=\\\"\\\" name=\\\"widget[required_string][]\\\"><option value=\\\"hi\\\">Hi</option><option value=\\\"hello\\\" selected>Hello</option></select>\\n  \\n  \\n</label>"
+
+  See `text_input_stack/3` for more options.
   """
   def multiple_select_stack(f, key, value_options, options \\ []) do
-    input_stack(&multiple_select/4, @select_class, f, key, options, value_options)
-  end
-
-  @doc """
-  See `text_input_stack/3` for usage.
-  """
-  def file_input_stack(f, key, options \\ []) do
-    input_stack(&file_input/3, @input_class, f, key, options)
+    input_stack(
+      &multiple_select/4,
+      @select_class,
+      @select_stack_class,
+      f,
+      key,
+      options,
+      value_options
+    )
   end
 
   @doc """
