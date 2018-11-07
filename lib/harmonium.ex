@@ -366,7 +366,7 @@ defmodule Harmonium do
   Renders a phone input stack.
 
       iex> phone_input_stack(f, :required_string) |> safe_to_string()
-      "<label class=\\\"rev-InputLabel rev-InputStack \\\">  \\n  <input class=\\\"rev-Input \\\" id=\\\"widget_required_string\\\" name=\\\"widget[required_string]\\\" type=\\\"phone\\\" value=\\\"hello\\\">\\n  \\n  \\n</label>"
+      "<label class=\\\"rev-InputLabel rev-InputStack \\\">  \\n  <input class=\\\"rev-Input \\\" id=\\\"widget_required_string\\\" name=\\\"widget[required_string]\\\" type=\\\"tel\\\" value=\\\"hello\\\">\\n  \\n  \\n</label>"
 
   See `text_input_stack/3` for more options.
   """
