@@ -66,3 +66,7 @@ For more details, and a set of Starter Settings for configuring Harmonium styles
   <% end %>
 <% end %>
 ```
+
+## Making a new release
+
+To deploy and update to the harmonium hex package, you first need to increment version number in `mix.exs`. Afterwards all that needs to be done is to create a new release tag for the new version number, and Travis should deploy the package automatically.
