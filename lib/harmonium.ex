@@ -595,12 +595,126 @@ defmodule Harmonium do
     end
   end
 
-  def mock_form(%{} = data, errors, func) do
-    func.(%Phoenix.HTML.Form{
-      data: data,
-      errors: Enum.to_list(errors),
-      name: "mock",
-      id: "mock"
-    })
+  @mock_form_default_form %Phoenix.HTML.Form{data: %{}, errors: [], name: "mock", id: "mock"}
+  @mock_form_default_inputs %{
+    empty: nil,
+    string: "Hello, World!",
+    int: 42,
+    float: 3.14,
+    boolean: true,
+    datetime: DateTime.utc_now()
+  }
+  @mock_form_default_error "There was an error."
+
+  @doc """
+  Utility function for mocking a form input.
+  It adds two inputs: 1) `:key`, and 2) `:key_with_error` (which will have an attached error)
+
+      iex> f = %Phoenix.HTML.Form{data: %{}, errors: []}
+      iex> mocked = mock_form_input(f, :foo, "foo value", "oops")
+      iex> mocked.data
+      %{foo: "foo value", foo_with_error: "foo value"}
+      iex> mocked.errors
+      [foo_with_error: "oops"]
+  """
+
+  def mock_form_input(
+        %Phoenix.HTML.Form{data: data, errors: errors} = form,
+        key,
+        value,
+        error_string \\ @mock_form_default_error
+      ) do
+    key_with_error = :"#{key}_with_error"
+
+    data =
+      data
+      |> Map.put(key, value)
+      |> Map.put(key_with_error, value)
+
+    errors =
+      errors
+      |> Keyword.put(key_with_error, error_string)
+
+    %{form | data: data, errors: errors}
+  end
+
+  @doc """
+  Utility function for mocking forms when you do not yet have the underlying data structure.
+
+      <%= mock_form fn f -> %>
+        <%= row do %>
+          <%= col do text_input_stack f, :string end %>
+          <%= col do text_input_stack f, :string, label: "Hello Label" end %>
+          <%= col do text_input_stack f, :string, label: "Hello Label", help: "This is help text." end %>
+          <%= col do text_input_stack f, :string_with_error end %>
+          <%= col do text_input_stack f, :string_with_error, help: "Help text and errors stack." end %>
+          <%= col do text_input_stack f, :nil, input: [placeholder: "Empty placeholder"] end %>
+        <% end %>
+      <% end %>
+
+  With `mock_form/1`, you get a default set of inputs to work with:
+
+      iex> mock_form(fn f -> Map.keys(f.data) end)
+      [
+        :boolean,
+        :boolean_with_error,
+        :datetime,
+        :datetime_with_error,
+        :empty,
+        :empty_with_error,
+        :float,
+        :float_with_error,
+        :int,
+        :int_with_error,
+        :string,
+        :string_with_error
+      ]
+
+  As you might expect, the `*_with_error` inputs will have errors attached to them.
+
+      iex> mock_form(fn f -> Keyword.keys(f.errors) end)
+      [
+        :string_with_error,
+        :int_with_error,
+        :float_with_error,
+        :empty_with_error,
+        :datetime_with_error,
+        :boolean_with_error
+      ]
+  """
+
+  def mock_form(func), do: mock_form(@mock_form_default_inputs, func)
+
+  @doc """
+  With `mock_form/2`, rather than getting default inputs, you supply your own.
+  Much the same as `mock_form/1` and `mock_form_input/4`, the `*_with_error` inputs have attached errors.
+
+      iex> mock_form(%{foo: "foo value", bar: "bar value"}, &(&1))
+      %Phoenix.HTML.Form{
+        data: %{
+          bar: "bar value",
+          bar_with_error: "bar value",
+          foo: "foo value",
+          foo_with_error: "foo value"
+        },
+        errors: [
+          foo_with_error: "There was an error.",
+          bar_with_error: "There was an error."
+        ],
+        hidden: [],
+        id: "mock",
+        impl: nil,
+        index: nil,
+        name: "mock",
+        options: [],
+        params: %{},
+        source: nil
+      }
+  """
+
+  def mock_form(inputs, func) do
+    inputs
+    |> Enum.reduce(@mock_form_default_form, fn {k, v}, f -> mock_form_input(f, k, v) end)
+    |> func.()
   end
 end
