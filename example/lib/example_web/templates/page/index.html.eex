@@ -1,0 +1,23 @@
+<%= mock_form %{
+                empty: nil,
+                empty_with_error: nil,
+                string: "Hello, World!",
+                string_with_error: "Hello, World!",
+                number: 42,
+                number_with_error: 42,
+              },
+              %{
+                empty_with_error: "Oh no, an error!",
+                string_with_error: "Oops, an error.",
+                number_with_error: "Aw shucks, there's an error.",
+              },
+              fn f -> %>
+  <%= row do %>
+    <%= col do text_input_stack f, :string end %>
+    <%= col do text_input_stack f, :string, label: "Hello Label" end %>
+    <%= col do text_input_stack f, :string, label: "Hello Label", help: "This is help text." end %>
+    <%= col do text_input_stack f, :string_with_error end %>
+    <%= col do text_input_stack f, :string_with_error, help: "Help text and errors stack." end %>
+    <%= col do text_input_stack f, :empty, input: [placeholder: "Empty placeholder"] end %>
+  <% end %>
+<% end %>

@@ -232,7 +232,8 @@ defmodule Harmonium do
   defp extract_error(f, key) do
     case List.keyfind(f.errors, key, 0) do
       nil -> nil
-      {_key, {text, _validation}} -> text
+      {_key, text} when is_bitstring(text) -> text
+      {_key, {text, _validation}} when is_bitstring(text) -> text
     end
   end
 
@@ -592,5 +593,14 @@ defmodule Harmonium do
       <%= contents %>
       """
     end
+  end
+
+  def mock_form(%{} = data, errors, func) do
+    func.(%Phoenix.HTML.Form{
+      data: data,
+      errors: Enum.to_list(errors),
+      name: "mock",
+      id: "mock"
+    })
   end
 end
