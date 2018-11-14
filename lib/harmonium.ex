@@ -534,12 +534,60 @@ defmodule Harmonium do
     end
   end
 
-  def icon_class(icon_name), do: "#{@icon_class}--#{icon_name}"
+  @doc """
+  Outputs CSS class names for an icon.
 
-  def icon(icon_name), do: icon(:span, icon_name)
+      iex> icon_class(:star)
+      "rev-Icon rev-Icon--star"
+      iex> icon_class("star-hollow")
+      "rev-Icon rev-Icon--star-hollow"
+  """
 
-  def icon(tag, icon_name) do
-    content_tag tag, class: icon_class(icon_name) do
+  def icon_class(icon_name) when is_atom(icon_name) or is_bitstring(icon_name),
+    do: rev_class(@icon_class, "#{icon_name}": true)
+
+  @doc """
+  Renders an icon tag.
+
+      iex> icon("up-arrow") |> safe_to_string()
+      "<span class=\\\"rev-Icon rev-Icon--up-arrow\\\"></span>"
+
+  You can override the tag type.
+
+      iex> icon(:i, "up-arrow") |> safe_to_string()
+      "<i class=\\\"rev-Icon rev-Icon--up-arrow\\\"></i>"
+
+  You can add additional classes and pass other attributes to the tag.
+
+      iex> icon("up-arrow", class: "ExtraClass", title: "An Icon") |> safe_to_string()
+      "<span class=\\\"rev-Icon rev-Icon--up-arrow ExtraClass\\\" title=\\\"An Icon\\\"></span>"
+
+  You can do all of these things at once.
+
+      iex> icon(:i, "up-arrow", class: "ExtraClass", title: "An Icon") |> safe_to_string()
+      "<i class=\\\"rev-Icon rev-Icon--up-arrow ExtraClass\\\" title=\\\"An Icon\\\"></i>"
+
+  """
+
+  def icon(icon_name) when is_atom(icon_name) or is_bitstring(icon_name),
+    do: icon(:span, icon_name)
+
+  def icon(tag, icon_name) when is_atom(icon_name) or is_bitstring(icon_name),
+    do: icon(tag, icon_name, [])
+
+  def icon(icon_name, options)
+      when (is_atom(icon_name) or is_bitstring(icon_name)) and is_list(options),
+      do: icon(:span, icon_name, options)
+
+  def icon(tag, icon_name, options)
+      when (is_atom(icon_name) or is_bitstring(icon_name)) and is_list(options) do
+    iclass = icon_class(icon_name)
+
+    tag_options =
+      options
+      |> Keyword.update(:class, iclass, fn x -> "#{iclass} #{x}" end)
+
+    content_tag tag, tag_options do
       nil
     end
   end
