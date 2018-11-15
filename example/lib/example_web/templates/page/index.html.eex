@@ -1,0 +1,10 @@
+<%= mock_form fn f -> %>
+  <%= row do %>
+    <%= col do text_input_stack f, :string end %>
+    <%= col do text_input_stack f, :string, label: "Hello Label" end %>
+    <%= col do text_input_stack f, :string, label: "Hello Label", help: "This is help text." end %>
+    <%= col do text_input_stack f, :string_with_error end %>
+    <%= col do text_input_stack f, :string_with_error, help: "Help text and errors stack." end %>
+    <%= col do text_input_stack f, :nil, input: [placeholder: "Empty placeholder"] end %>
+  <% end %>
+<% end %>
