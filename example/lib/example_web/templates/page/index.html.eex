@@ -1,10 +1,331 @@
-<%= mock_form fn f -> %>
-  <%= row do %>
-    <%= col do text_input_stack f, :string end %>
-    <%= col do text_input_stack f, :string, label: "Hello Label" end %>
-    <%= col do text_input_stack f, :string, label: "Hello Label", help: "This is help text." end %>
-    <%= col do text_input_stack f, :string_with_error end %>
-    <%= col do text_input_stack f, :string_with_error, help: "Help text and errors stack." end %>
-    <%= col do text_input_stack f, :nil, input: [placeholder: "Empty placeholder"] end %>
+<%
+
+# Some useful data vars that we use in the examples below
+
+airports = [{"Louis Armstrong", "MSY"}, {"John F. Kennedy", "JFK"}]
+
+%>
+
+<%# Styles that are only useful for the styleguide %>
+<style>
+.BackgroundForInverted {
+  background-color: black;
+  padding: 10px;
+}
+</style>
+
+<%= row do %>
+
+  <%= col do %>
+
+    <%= row do %>
+      <%= col do %>
+        <h2>Styleguide</h2>
+      <% end %>
+    <% end %>
+
+    <section>
+      <%= row do %>
+        <%= col do %>
+          <h3>Cards</h3>
+        <% end %>
+
+        <%= col do %>
+          <%= card do %>
+            <%= card_header do %>
+              <%= row do %>
+                <%= col do %><h4>Header text</h4><% end %>
+              <% end %>
+            <% end %>
+            <%= card_body do %>
+              <%= row do %>
+                <%= col do %><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p><% end %>
+              <% end %>
+            <% end %>
+            <%= card_footer do %>
+              <%= row do %>
+                <%= col do %><small>Footer text</small><% end %>
+              <% end %>
+            <% end %>
+          <% end %>
+        <% end %>
+      <% end %>
+    </section>
+
+
+    <section>
+      <%= row do %>
+        <%= col do %>
+          <h3>Buttons</h3>
+
+          <%= button "button_class(small: true)", to: "#", class: button_class(small: true) %>
+          <%= button "button_class()", to: "#", class: button_class() %>
+          <%= button "button_class(large: true)", to: "#", class: button_class(large: true) %>
+
+          <h4><strong>Styles</strong></h4>
+
+          <%= button "button_class()", to: "#", class: button_class() %>
+          <%= button "button_class(secondary: true)", to: "#", class: button_class(secondary: true) %>
+          <%= button "button_class(tertiary: true)", to: "#", class: button_class(tertiary: true) %>
+
+          <div class="BackgroundForInverted">
+            <%= button "button_class(inverted: true)", to: "#", class: button_class(inverted: true) %>
+            <%= button "button_class(inverted: true, secondary: true)", to: "#", class: button_class(inverted: true, secondary: true) %>
+          </div>
+
+          <h4><strong>Disabled</strong></h4>
+
+          <%= button "button_class(disabled: true)", to: "#", class: button_class(disabled: true) %>
+          <%= button "button_class(secondary: true, disabled: true)", to: "#", class: button_class(secondary: true, disabled: true) %>
+
+          <div class="BackgroundForInverted">
+            <%= button "button_class(inverted: true, disabled: true)", to: "#", class: button_class(inverted: true, disabled: true) %>
+            <%= button "button_class(inverted: true, secondary: true, disabled: true)", to: "#", class: button_class(inverted: true, secondary: true, disabled: true) %>
+          </div>
+
+          <h4><strong><code>button_group do</code></strong></h4>
+
+          <%= button_group do %>
+            <%= link "Button 1", to: "#", class: button_class(secondary: true) %>
+            <%= link "Button 2", to: "#", class: button_class() %>
+            <%= link "Button 3", to: "#", class: button_class(disabled: true) %>
+          <% end %>
+        <% end %>
+      <% end %>
+    </section>
+
+
+    <section>
+      <%= mock_form fn f -> %>
+
+        <%= row do %>
+          <%= col do %>
+            <h3>Form Elements</h3>
+            <p>
+              <strong>Background:</strong>
+              If an input on the first row has an error message,
+              inputs on the second row will not be properly aligned.
+            </p>
+            <p>
+              <strong>Fix:</strong>
+              When there are multiple inputs in a row,
+              wrap the entire form with the class
+              <code>AlignInputs</code>.
+              This can either be applied to a new
+              <code><%= "<div>"%></code> wrapping the inputs,
+              or on a <code>row</code>.
+            </p>
+          <% end %>
+        <% end %>
+
+        <%= row do %>
+          <%= col do %>
+            <h4><strong>Inputs (with <code>AlignInputs</code> wrapper)</strong></h4>
+          <% end %>
+
+          <div class="AlignInputs">
+            <%= col medium: 6 do %>
+              <%= text_input_stack f, :empty_with_error, label: "Input with Label", input: [placeholder: "Placeholder"] %>
+            <% end %>
+
+            <%= col medium: 6 do %>
+              <%= text_input_stack f, :empty, label: "Input with Label", input: [placeholder: "Placeholder"] %>
+            <% end %>
+
+            <%= col medium: 6 do %>
+              <%= text_input_stack f, :foo, help: "Help text goes here", input: [placeholder: "Placeholder"] %>
+            <% end %>
+
+            <%= col medium: 6 do %>
+              <input class="rev-Input is-invalid-input is-invalid" placeholder="Has an Error" />
+            <% end %>
+          </div>
+        <% end %>
+
+        <%= row do %>
+          <%= col do %>
+            <h4><strong>File Input</strong></h4>
+          <% end %>
+
+          <%= col medium: 6 do %>
+            <label class="rev-FileInputStack rev-InputLabel is-invalid-label is-invalid">
+              File Input
+              <div class="rev-FileInput is-invalid rev-InputGroup">
+                <span class="rev-InputGroup-field rev-InputGroup-label">Select File</span>
+                <div class="rev-InputGroup-button">
+                  <label class="rev-FileInput-button rev-Button">
+                    Choose a File
+                    <input type="file" class="ShowForSR">
+                  </label>
+                </div>
+              </div>
+              <small class="rev-InputHelpText rev-HelpText">Help text goes here</small>
+              <span class="rev-InputErrors">Error text goes here</span>
+            </label>
+          <% end %>
+        <% end %>
+
+        <%= row do %>
+          <%= col do %>
+            <h4><strong>Input Groups (no helpers yet)</strong></h4>
+          <% end %>
+
+          <%= col do %>
+            <label class="rev-InputLabel">
+              <span class="rev-LabelText">Input Group</span>
+              <div class="rev-InputGroup">
+                <select class="rev-Select rev-InputGroup-field">
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                </select>
+                <input class="rev-Input rev-InputGroup-field" placeholder="Placeholder"/>
+                <div class="rev-InputGroup-button">
+                  <button class="rev-Button">Button</button>
+                </div>
+              </div>
+              <small class="rev-InputHelpText rev-HelpText">Help text goes here</small>
+            </label>
+          <% end %>
+
+          <%= col do %>
+            <div class="rev-InputGroup">
+              <span class="rev-InputGroup-label Prefix">$</span>
+              <input type="number" class="rev-InputGroup-field rev-Input" value="100">
+              <div class="rev-InputGroup-button">
+                <button class="rev-Button rev-Button--secondary">Cancel</button>
+              </div>
+              <div class="rev-InputGroup-button">
+                <button class="rev-Button">Save</button>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+
+        <%= row do %>
+          <%= col do %>
+            <h4><strong>Selects</strong></h4>
+          <% end %>
+
+          <%= col medium: 6 do %>
+            <%= select_stack f, :empty, airports, label: "Select" %>
+          <% end %>
+
+          <%= col medium: 6 do %>
+            <%= select_stack f, :empty_with_error, airports, label: "Both Help and Error Text", help: "Help text goes here" %>
+          <% end %>
+        <% end %>
+
+        <%= row do %>
+          <%= col do %>
+            <h4><strong>TextAreas</strong></h4>
+          <% end %>
+
+          <%= col medium: 6 do %>
+            <%= textarea_stack f, :foo, input: [placeholder: "Textarea"] %>
+          <% end %>
+
+          <%= col medium: 6 do %>
+            <%= textarea f, :empty_with_error, placeholder: "Has an error", class: "rev-Textarea is-invalid-input is-invalid" %>
+          <% end %>
+
+          <%= col medium: 6 do %>
+            <%= textarea_stack f, :foo, label: "Is a Stack" %>
+          <% end %>
+
+          <%= col medium: 6 do %>
+            <%= textarea_stack f, :empty_with_error, label: "Has Help Text and Error", help: "Help text goes here" %>
+          <% end %>
+        <% end %>
+
+        <%= row do %>
+          <%= col medium: 6 do %>
+
+            <h4><strong>Inline Checkboxes</strong></h4>
+
+            <%= single_checkbox f, :foo, label: "One" %>
+            <%= single_checkbox f, :foo, label: "Two" %>
+            <%= single_checkbox f, :foo, label: "Three" %>
+
+            <h4><strong>Stacked Checkboxes (no helpers yet)</strong></h4>
+
+            <label class="rev-InputLabel rev-Checkbox rev-Checkbox--stacked">
+              <input type="checkbox" class="rev-Checkbox-input"/>
+              <span class="rev-Checkbox-label">One</span>
+            </label>
+            <label class="rev-InputLabel rev-Checkbox rev-Checkbox--stacked">
+              <input type="checkbox" class="rev-Checkbox-input"/>
+              <span class="rev-Checkbox-label">Two</span>
+            </label>
+            <label class="rev-InputLabel rev-Checkbox rev-Checkbox--stacked">
+              <input type="checkbox" class="rev-Checkbox-input"/>
+              <span class="rev-Checkbox-label">Three</span>
+            </label>
+
+            <fieldset class="rev-CheckboxFieldset fieldset rev-CheckableFieldset is-invalid-fieldset">
+              <legend class="is-invalid-label">Label for Checkboxes</legend>
+              <label class="rev-CheckboxFieldset-checkbox rev-Checkbox is-invalid rev-InputLabel is-invalid-label is-invalid">
+                <input type="checkbox" class="rev-Checkbox-input is-invalid-input is-invalid"/>
+                <span class="rev-Checkbox-label">One</span>
+              </label>
+              <label class="rev-CheckboxFieldset-checkbox rev-Checkbox is-invalid rev-InputLabel is-invalid-label is-invalid">
+                <input type="checkbox" class="rev-Checkbox-input is-invalid-input is-invalid"/>
+                <span class="rev-Checkbox-label">Two</span>
+              </label>
+              <label class="rev-CheckboxFieldset-checkbox rev-Checkbox is-invalid rev-InputLabel is-invalid-label is-invalid">
+                <input type="checkbox" disabled class="rev-Checkbox-input is-invalid-input is-invalid"/>
+                <span class="rev-Checkbox-label">Three</span>
+              </label>
+              <small class="rev-InputHelpText rev-HelpText">Help text goes here</small>
+              <span class="form-error is-visible rev-InputErrors">Error text goes here</span>
+            </fieldset>
+          <% end %>
+
+          <%= col medium: 6 do %>
+
+            <h4><strong>Inline Radio Buttons</strong></h4>
+
+            <%= single_radio_button f, :foo, 1, label: "One" %>
+            <%= single_radio_button f, :foo, 2, label: "Two" %>
+            <%= single_radio_button f, :foo, 3, label: "Three" %>
+
+            <h4><strong>Stacked Radio Buttons (no helpers yet)</strong></h4>
+
+            <label class="rev-InputLabel rev-Radio rev-Radio--stacked">
+              <input type="radio" class="rev-Radio-input"/>
+              <span class="rev-Radio-label">One</span>
+            </label>
+            <label class="rev-InputLabel rev-Radio rev-Radio--stacked">
+              <input type="radio" class="rev-Radio-input"/>
+              <span class="rev-Radio-label">Two</span>
+            </label>
+            <label class="rev-InputLabel rev-Radio rev-Radio--stacked">
+              <input type="radio" class="rev-Radio-input"/>
+              <span class="rev-Radio-label">Three</span>
+            </label>
+
+            <fieldset class="rev-RadioFieldset fieldset rev-CheckableFieldset is-invalid-fieldset">
+              <legend class="is-invalid-label">Label for Radios</legend>
+              <label class="rev-RadioFieldset-radio rev-Radio is-invalid rev-InputLabel is-invalid-label is-invalid">
+                <input type="radio" class="rev-Radio-input is-invalid-input is-invalid"/>
+                <span class="rev-Radio-label">One</span>
+              </label>
+              <label class="rev-RadioFieldset-radio rev-Radio is-invalid rev-InputLabel is-invalid-label is-invalid">
+                <input type="radio" class="rev-Radio-input is-invalid-input is-invalid"/>
+                <span class="rev-Radio-label">Two</span>
+              </label>
+              <label class="rev-RadioFieldset-radio rev-Radio is-invalid rev-InputLabel is-invalid-label is-invalid">
+                <input type="radio" disabled class="rev-Radio-input is-invalid-input is-invalid"/>
+                <span class="rev-Radio-label">Three</span>
+              </label>
+              <small class="rev-InputHelpText rev-HelpText">Help text goes here</small>
+              <span class="form-error is-visible rev-InputErrors">Error text goes here</span>
+            </fieldset>
+          <% end %>
+        <% end %>
+      <% end %>
+
+    </section>
+
   <% end %>
 <% end %>
