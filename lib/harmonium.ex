@@ -279,8 +279,8 @@ defmodule Harmonium do
       ~E"""
         <%= label_text %>
         <%= input %>
-        <%= error_text %>
         <%= help_text %>
+        <%= error_text %>
       """
     end
   end
@@ -304,7 +304,7 @@ defmodule Harmonium do
   You may optionally add help.
 
       iex> text_input_stack(f, :required_string, help: "This field is required.") |> safe_to_string()
-      "<label class=\\\"rev-InputLabel rev-InputStack \\\">  \\n  <input class=\\\"rev-Input \\\" id=\\\"widget_required_string\\\" name=\\\"widget[required_string]\\\" type=\\\"text\\\" value=\\\"hello\\\">\\n  \\n  <small class=\\\"rev-HelpText rev-InputHelpText\\\">This field is required.</small>\\n</label>"
+      "<label class=\\\"rev-InputLabel rev-InputStack \\\">  \\n  <input class=\\\"rev-Input \\\" id=\\\"widget_required_string\\\" name=\\\"widget[required_string]\\\" type=\\\"text\\\" value=\\\"hello\\\">\\n  <small class=\\\"rev-HelpText rev-InputHelpText\\\">This field is required.</small>\\n  \\n</label>"
 
   The `:input` option passes another set of options through to the `<input>` field.
 
@@ -314,7 +314,7 @@ defmodule Harmonium do
   When the field has an error, error styles are applied, and it is displayed.
 
       iex> text_input_stack(form_with_errors, :required_string) |> safe_to_string()
-      "<label class=\\\"rev-InputLabel rev-InputStack is-invalid\\\">  \\n  <input class=\\\"rev-Input is-invalid\\\" id=\\\"widget_required_string\\\" name=\\\"widget[required_string]\\\" type=\\\"text\\\">\\n  <small class=\\\"rev-InputErrors\\\">can&#39;t be blank</small>\\n  \\n</label>"
+      "<label class=\\\"rev-InputLabel rev-InputStack is-invalid\\\">  \\n  <input class=\\\"rev-Input is-invalid\\\" id=\\\"widget_required_string\\\" name=\\\"widget[required_string]\\\" type=\\\"text\\\">\\n  \\n  <small class=\\\"rev-InputErrors\\\">can&#39;t be blank</small>\\n</label>"
   """
   def text_input_stack(f, key, options \\ []) do
     input_stack(&text_input/3, @input_class, @input_stack_class, f, key, options)
