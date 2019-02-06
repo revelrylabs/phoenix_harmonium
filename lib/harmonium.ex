@@ -35,6 +35,9 @@ defmodule Harmonium do
   @drawer_expander_class "#{@drawer_class}-expander"
   @drawer_contents_class "#{@drawer_class}-contents"
   @icon_class "rev-Icon"
+  @fieldset_class "fieldset rev-CheckableFieldset"
+  @radio_fieldset_stack_class "rev-RadioFieldset"
+  @checkbox_fieldset_stack_class "rev-CheckboxFieldset"
 
   @doc """
   Constructs a CSS class with SUIT modifiers.
@@ -193,6 +196,13 @@ defmodule Harmonium do
   def rev_label_class(modifiers \\ []), do: rev_class(@label_class, modifiers)
 
   @doc """
+  Constructs the classes for a fieldset.
+  """
+  def rev_fieldset_class(modifiers \\ []) do
+    "#{@fieldset_class} #{rev_class(@radio_fieldset_stack_class, modifiers)}"
+  end
+
+  @doc """
   Renders an input label.
   """
   def rev_label(modifiers, do: block) do
@@ -215,6 +225,36 @@ defmodule Harmonium do
   """
   def rev_error_text(do: block) do
     content_tag :small, class: @error_class do
+      block
+    end
+  end
+
+  @doc """
+  Renders a fieldset
+  """
+  def rev_fieldset(nil, modifiers, do: block) do
+    content_tag :fieldset, class: rev_fieldset_class(modifiers) do
+      block
+    end
+  end
+
+  def rev_fieldset(_error, modifiers, do: block) do
+    content_tag :fieldset, class: "#{rev_fieldset_class(modifiers)} #{@invalid_class}-fieldset" do
+      block
+    end
+  end
+
+  @doc """
+  Constructs a legend tag
+  """
+  def rev_legend(nil, do: block) do
+    content_tag :legend do
+      block
+    end
+  end
+
+  def rev_legend(_error, do: block) do
+    content_tag :legend, class: "#{@invalid_class}-label" do
       block
     end
   end
@@ -279,6 +319,65 @@ defmodule Harmonium do
       ~E"""
         <%= label_text %>
         <%= input %>
+        <%= error_text %>
+        <%= help_text %>
+      """
+    end
+  end
+
+  defp fieldset_stack(func, input_class, stack_class, f, key, options, value_options) do
+    error = extract_error(f, key)
+
+    validity_class = if error, do: @invalid_class, else: ""
+
+    legend_text =
+      case options[:legend] do
+        nil -> nil
+        value -> rev_legend(error, do: value)
+      end
+
+    input_options =
+      options
+      |> Keyword.get(:input, [])
+      |> Keyword.put(:class, "#{input_class} #{validity_class}")
+
+    inputs =
+      case value_options do
+        nil ->
+          func.(f, key, input_options)
+
+        _ ->
+          Enum.map(value_options, fn option ->
+            case option do
+              {label, value} ->
+                # For Radios
+                input_options = Keyword.put(input_options, :label, label)
+                func.(f, key, value, input_options)
+
+              key ->
+                # For Checkboxes
+                input_options = Keyword.put(input_options, :label, "#{key}")
+                func.(f, key, input_options)
+            end
+          end)
+      end
+
+    error_text =
+      case error do
+        nil -> nil
+        _ -> rev_error_text(do: error)
+      end
+
+    help_text =
+      case options[:help] do
+        nil -> nil
+        value -> rev_help_text(do: value)
+      end
+
+    rev_fieldset error, class: "#{stack_class} #{validity_class}" do
+      ~E"""
+        <%= legend_text %>
+        <%= inputs %>
         <%= error_text %>
         <%= help_text %>
       """
@@ -401,6 +500,36 @@ defmodule Harmonium do
       &multiple_select/4,
       @select_class,
       @select_stack_class,
+      f,
+      key,
+      options,
+      value_options
+    )
+  end
+
+  @doc """
+
+  """
+  def radio_fieldset_stack(f, key, value_options, options \\ []) do
+    fieldset_stack(
+      &single_radio_button/4,
+      @fieldset_class,
+      @radio_fieldset_stack_class,
+      f,
+      key,
+      options,
+      value_options
+    )
+  end
+
+  @doc """
+
+  """
+  def checkbox_fieldset_stack(f, key, value_options, options \\ []) do
+    fieldset_stack(
+      &single_checkbox/3,
+      @fieldset_class,
+      @checkbox_fieldset_stack_class,
       f,
       key,
       options,

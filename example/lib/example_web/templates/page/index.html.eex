@@ -279,6 +279,19 @@ airports = [{"Louis Armstrong", "MSY"}, {"John F. Kennedy", "JFK"}]
               <small class="rev-InputHelpText rev-HelpText">Help text goes here</small>
               <span class="form-error is-visible rev-InputErrors">Error text goes here</span>
             </fieldset>
+
+            <%= checkbox_fieldset_stack f,
+              :foo,
+              [:One, :Two, :Three],
+              legend: "Label for Checkbox Fieldset",
+              help: "Help text goes here"
+            %>
+            <%= checkbox_fieldset_stack f,
+              :empty_with_error,
+              [:One, :Two, :Three],
+              legend: "Radio Fieldset with Help and Error",
+              help: "Help text goes here"
+            %>
           <% end %>
 
           <%= col medium: 6 do %>
@@ -321,6 +334,19 @@ airports = [{"Louis Armstrong", "MSY"}, {"John F. Kennedy", "JFK"}]
               <small class="rev-InputHelpText rev-HelpText">Help text goes here</small>
               <span class="form-error is-visible rev-InputErrors">Error text goes here</span>
             </fieldset>
+
+            <%= radio_fieldset_stack f,
+              :foo,
+              [One: 1, Two: 2, Three: 3],
+              legend: "Label for Radio Fieldset",
+              help: "Help text goes here"
+            %>
+            <%= radio_fieldset_stack f,
+              :empty_with_error,
+              [One: 1, Two: 2, Three: 3],
+              legend: "Radio Fieldset with Help and Error",
+              help: "Help text goes here"
+            %>
           <% end %>
         <% end %>
       <% end %>
