@@ -1,9 +1,9 @@
 sudo: false
 language: elixir
 elixir:
-  - 1.6
+  - 1.7
 otp_release:
-  - 20.2
+  - 21.1
 cache:
   directories:
     - _build
@@ -26,12 +26,6 @@ deploy:
   provider: script
   # http://yaml.org/spec/1.2/spec.html#id2779048
   # `>-` indicates the line folding.
-  script: >-
-    mix deps.get &&
-    mix hex.config username "$HEX_USERNAME" &&
-    (mix hex.config encrypted_key "$HEX_ENCRYPTED_KEY" > /dev/null 2>&1) &&
-    (echo "$HEX_PASSPHRASE" | mix hex.publish --no-confirm) &&
-    mix clean &&
-    mix deps.clean --all
+  script: mix hex.publish --yes
   on:
     tags: true
