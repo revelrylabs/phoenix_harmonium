@@ -228,16 +228,15 @@ defmodule Harmonium do
     end
   end
 
-  # Gets the error helper function from Phoenix config
+  # Get the error helper function from the host application
+  # for translating and interpolating error messages.
+  #
+  # Returns the text of the error message if the helper isn't configured.
   defp error_helper(error) do
     case Application.get_env(:harmonium, :error_helper, nil) do
       nil ->
-        raise """
-          No error helper configured for Harmonium. Please add the following config to your Phoenix application:
-
-          config :harmonium,
-            error_helper: &YourAppWeb.ErrorHelpers.translate_error/1
-        """
+        {message, opts} = error
+        message
 
       error_helper ->
         error_helper.(error)
