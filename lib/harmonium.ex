@@ -228,12 +228,27 @@ defmodule Harmonium do
     end
   end
 
+  # Get the error helper function from the host application
+  # for translating and interpolating error messages.
+  #
+  # Returns the text of the error message if the helper isn't configured.
+  defp error_helper(error) do
+    case Application.get_env(:harmonium, :error_helper, nil) do
+      nil ->
+        {message, opts} = error
+        message
+
+      error_helper ->
+        error_helper.(error)
+    end
+  end
+
   # Extract an error for a given key from Phoenix form data.
-  defp extract_error(f, key) do
-    case List.keyfind(f.errors, key, 0) do
+  defp extract_error(form, field) do
+    case List.keyfind(form.errors, field, 0) do
       nil -> nil
-      {_key, text} when is_bitstring(text) -> text
-      {_key, {text, _validation}} when is_bitstring(text) -> text
+      {_key, error} when is_tuple(error) -> error_helper(error)
+      {_key, error} when is_bitstring(error) -> error_helper({error, []})
     end
   end
 
@@ -312,9 +327,14 @@ defmodule Harmonium do
       "<label class=\\\"rev-InputLabel rev-InputStack \\\">  \\n  <input class=\\\"rev-Input \\\" id=\\\"widget_required_string\\\" name=\\\"widget[required_string]\\\" placeholder=\\\"Required String\\\" type=\\\"text\\\" value=\\\"hello\\\">\\n  \\n  \\n</label>"
 
   When the field has an error, error styles are applied, and it is displayed.
-
+      iex> Application.put_env(:harmonium, :error_helper, nil)
       iex> text_input_stack(form_with_errors, :required_string) |> safe_to_string()
       "<label class=\\\"rev-InputLabel rev-InputStack is-invalid\\\">  \\n  <input class=\\\"rev-Input is-invalid\\\" id=\\\"widget_required_string\\\" name=\\\"widget[required_string]\\\" type=\\\"text\\\">\\n  <small class=\\\"rev-InputErrors\\\">can&#39;t be blank</small>\\n  \\n</label>"
+
+  If an error helper from the host application is configured, it is used to format errors.
+      iex> Application.put_env(:harmonium, :error_helper, &mock_translate_error/1)
+      iex> text_input_stack(form_with_errors, :required_string) |> safe_to_string()
+      "<label class=\\\"rev-InputLabel rev-InputStack is-invalid\\\">  \\n  <input class=\\\"rev-Input is-invalid\\\" id=\\\"widget_required_string\\\" name=\\\"widget[required_string]\\\" type=\\\"text\\\">\\n  <small class=\\\"rev-InputErrors\\\">This is a translated or formatted error</small>\\n  \\n</label>"
   """
   def text_input_stack(f, key, options \\ []) do
     input_stack(&text_input/3, @input_class, @input_stack_class, f, key, options)

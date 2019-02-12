@@ -46,5 +46,9 @@ defmodule HarmoniumTest do
     changeset_with_errors() |> to_form()
   end
 
+  def mock_translate_error(_) do
+    "This is a translated or formatted error"
+  end
+
   doctest Harmonium
 end
