@@ -228,12 +228,28 @@ defmodule Harmonium do
     end
   end
 
+  # Gets the error helper function from Phoenix config
+  defp error_helper(error) do
+    case Application.get_env(:harmonium, :error_helper, nil) do
+      nil ->
+        raise """
+          No error helper configured for Harmonium. Please add the following config to your Phoenix application:
+
+          config :harmonium,
+            error_helper: &YourAppWeb.ErrorHelpers.translate_error/1
+        """
+
+      error_helper ->
+        error_helper.(error)
+    end
+  end
+
   # Extract an error for a given key from Phoenix form data.
-  defp extract_error(f, key) do
-    case List.keyfind(f.errors, key, 0) do
+  defp extract_error(form, field) do
+    case List.keyfind(form.errors, field, 0) do
       nil -> nil
-      {_key, text} when is_bitstring(text) -> text
-      {_key, {text, _validation}} when is_bitstring(text) -> text
+      {_key, error} when is_tuple(error) -> error_helper(error)
+      {_key, error} when is_bitstring(error) -> error_helper({error, []})
     end
   end
 
