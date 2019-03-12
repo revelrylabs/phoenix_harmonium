@@ -11,9 +11,9 @@ Harmonium was originally conceived as a set of styled React components ([harmoni
 
 Here are a just few of the features:
 
-* Flexible grid layout system
-* Enhanced form helpers that decorate your inputs with errors and help text in a uniform way
-* Functions for inserting just the right CSS class names, for those moments when you want to go off the pre-built path
+- Flexible grid layout system
+- Enhanced form helpers that decorate your inputs with errors and help text in a uniform way
+- Functions for inserting just the right CSS class names, for those moments when you want to go off the pre-built path
 
 ## Installation
 
@@ -27,6 +27,13 @@ def deps do
 end
 ```
 
+Then, in `config.exs`, pass in your Phoenix application's error translator function:
+
+```
+config :harmonium,
+  error_helper: &YourAppWeb.ErrorHelpers.translate_error/1
+```
+
 From your app's root directory, run this command to get the `harmonium` package from NPM, which contains the SCSS you'll need:
 
 ```bash
@@ -34,6 +41,7 @@ $(cd assets && npm install --save harmonium)
 ```
 
 In `assets/app.scss`, import the SCSS:
+
 ```scss
 @import '~harmonium/scss/app';
 ```
@@ -41,6 +49,7 @@ In `assets/app.scss`, import the SCSS:
 For more details, and a set of Starter Settings for configuring Harmonium styles, go to [harmonium.revelry.co](https://harmonium.revelry.co/)
 
 ## Example Usage
+
 ```elixir
 <%= form_for @changeset, @action, fn f -> %>
   <%= row do %>
