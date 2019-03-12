@@ -357,25 +357,10 @@ defmodule Harmonium do
       |> Keyword.put(:class, "#{input_class} #{validity_class}")
 
     inputs =
-      case value_options do
-        nil ->
-          func.(f, key, input_options)
-
-        _ ->
-          Enum.map(value_options, fn option ->
-            case option do
-              {label, value} ->
-                # For Radios
-                input_options = Keyword.put(input_options, :label, label)
-                func.(f, key, value, input_options)
-
-              key ->
-                # For Checkboxes
-                input_options = Keyword.put(input_options, :label, "#{key}")
-                func.(f, key, input_options)
-            end
-          end)
-      end
+      Enum.map(value_options, fn {label, value} ->
+        input_options = Keyword.put(input_options, :label, label)
+        func.(f, key, value, input_options)
+      end)
 
     error_text =
       case error do
@@ -392,6 +377,7 @@ defmodule Harmonium do
     rev_fieldset error, class: "#{stack_class} #{validity_class}" do
       ~E"""
         <%= legend_text %>
+        <%= hidden_input f, key, value: "" %>
         <%= inputs %>
         <%= error_text %>
         <%= help_text %>
@@ -528,7 +514,8 @@ defmodule Harmonium do
   end
 
   @doc """
-
+  Renders a radio fieldset
+  TODO: finish this doc
   """
   def radio_fieldset_stack(f, key, value_options, options \\ []) do
     fieldset_stack(
@@ -543,11 +530,37 @@ defmodule Harmonium do
   end
 
   @doc """
+  Renders a checkbox fieldset. This is ideal for
+  situations where you have an array field type
+  in your schema. The resulting form params are
+  an array of the checked boxes' values for a
+  given key, similar to a multi-select input.
+
+  Example:
+  %{
+    "params" => %{
+      "key" => ["0", "4", "7"]
+    }
+  }
+
+  This is distinct from semantic checkboxes that
+  render both "true" and "false" (hidden) value
+  boxes, with the advantage of being able to
+  immediately validate the incoming array params
+  without having to do work on the true/false
+  values first.
+
+  Takes a list of tuples for value/label options.
+
+  TODO: finish example section
+
+    iex> checkbox_fieldset_stack(f, :foo, [One: 1, Two: 2, Three: 3]) |> safe_to_string()
+    "<label class=\\\"rev-InputLabel rev-Checkbox\\\"><input class=\\\"rev-Checkbox-input\\\" id=\\\"widget_foo\\\" name=\\\"widget[foo][]\\\" type=\\\"checkbox\\\" value=\\\"1\\\"></label>"
 
   """
   def checkbox_fieldset_stack(f, key, value_options, options \\ []) do
     fieldset_stack(
-      &single_checkbox/3,
+      &grouped_checkbox/4,
       @fieldset_class,
       @checkbox_fieldset_stack_class,
       f,
@@ -555,6 +568,55 @@ defmodule Harmonium do
       options,
       value_options
     )
+  end
+
+  # Creates a checkbox for grouped fieldsets.
+  defp grouped_checkbox(f, key, value, options) do
+    selected_options = input_value(f, key)
+    # Selected options may be nil or empty string and cause Enum to fail
+    selected_options = if is_list(selected_options), do: selected_options, else: []
+    first = List.first(selected_options)
+    # Might be a type mismatch when using integers for enum functionality
+    selected_options =
+      cond do
+        is_integer(value) && is_bitstring(first) ->
+          Enum.map(selected_options, &String.to_integer/1)
+
+        is_bitstring(value) && is_integer(first) ->
+          Enum.map(selected_options, &Integer.to_string/1)
+
+        true ->
+          selected_options
+      end
+
+    checked = Enum.member?(selected_options, value)
+    id = input_id(f, key, value)
+    # Adding the empty brackets is the key to grouping the values
+    name = "#{input_name(f, key)}[]"
+
+    input_options =
+      options
+      |> Keyword.get(:input, [])
+      |> Keyword.put(:class, "rev-Checkbox-input")
+
+    box = ~E"""
+      <input id="<%= id %>" name="<%= name %>" value="<%= value %>" type="checkbox" <%= if checked, do: "checked" %> class="<%= input_options[:class] %>" >
+    """
+
+    label =
+      case options[:label] do
+        nil ->
+          nil
+
+        text ->
+          content_tag :span, class: "rev-Checkbox-label" do
+            text
+          end
+      end
+
+    rev_label class: "rev-Checkbox" do
+      ~E"<%= box %><%= label %>"
+    end
   end
 
   @doc """

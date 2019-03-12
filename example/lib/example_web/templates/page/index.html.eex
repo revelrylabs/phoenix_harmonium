@@ -282,14 +282,14 @@ airports = [{"Louis Armstrong", "MSY"}, {"John F. Kennedy", "JFK"}]
 
             <%= checkbox_fieldset_stack f,
               :foo,
-              [:One, :Two, :Three],
-              legend: "Label for Checkbox Fieldset",
+              [One: 1, Two: 2, Three: 3],
+              legend: "Legend for Checkbox Fieldset",
               help: "Help text goes here"
             %>
             <%= checkbox_fieldset_stack f,
               :empty_with_error,
-              [:One, :Two, :Three],
-              legend: "Radio Fieldset with Help and Error",
+              [One: 1, Two: 2, Three: 3],
+              legend: "Checkbox Fieldset with Help and Error",
               help: "Help text goes here"
             %>
           <% end %>
@@ -338,7 +338,7 @@ airports = [{"Louis Armstrong", "MSY"}, {"John F. Kennedy", "JFK"}]
             <%= radio_fieldset_stack f,
               :foo,
               [One: 1, Two: 2, Three: 3],
-              legend: "Label for Radio Fieldset",
+              legend: "Legend for Radio Fieldset",
               help: "Help text goes here"
             %>
             <%= radio_fieldset_stack f,
