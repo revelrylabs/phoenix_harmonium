@@ -403,7 +403,7 @@ defmodule Harmonium do
     "<label class=\\\"rev-InputLabel rev-SelectStack \\\">  \\n  <select class=\\\"rev-Select \\\" id=\\\"widget_required_string\\\" name=\\\"widget[required_string]\\\"><option value=\\\"hi\\\">Hi</option><option value=\\\"hello\\\" selected>Hello</option></select>\\n  \\n  \\n</label>"
 
     iex> select_stack(f, :required_string, ["Hi": "hi", "Hello": "hello"], input: [value: "hello"]) |> safe_to_string()
-    "<label class=\"rev-InputLabel rev-SelectStack \">  \n  <select class=\"rev-Select \" id=\"widget_required_string\" name=\"widget[required_string]\"><option value=\"hi\">Hi</option><option value=\"hello\" selected>Hello</option></select>\n  \n  \n</label>"
+    "<label class=\\\"rev-InputLabel rev-SelectStack \\\">  \\n  <select class=\\\"rev-Select \\\" id=\\\"widget_required_string\\\" name=\\\"widget[required_string]\\\"><option value=\\\"hi\\\">Hi</option><option value=\\\"hello\\\" selected>Hello</option></select>\\n  \\n  \\n</label>"
 
   See `text_input_stack/3` for more options.
   """
@@ -418,7 +418,7 @@ defmodule Harmonium do
     "<label class=\\\"rev-InputLabel rev-SelectStack \\\">  <span class=\\\"rev-LabelText\\\">Greetings</span>\\n  <select class=\\\"rev-Select \\\" id=\\\"widget_required_string\\\" multiple=\\\"\\\" name=\\\"widget[required_string][]\\\" required><option value=\\\"hi\\\">Hi</option><option value=\\\"hello\\\" selected>Hello</option></select>\\n  \\n  \\n</label>"
 
     iex> multiple_select_stack(f, :required_string, ["Hi": "hi", "Hello": "hello"], input: [value: ["hi", "hello"]]) |> safe_to_string()
-    "<label class=\"rev-InputLabel rev-SelectStack \">  \n  <select class=\"rev-Select \" id=\"widget_required_string\" multiple=\"\" name=\"widget[required_string][]\"><option value=\"hi\" selected>Hi</option><option value=\"hello\" selected>Hello</option></select>\n  \n  \n</label>"
+    "<label class=\\\"rev-InputLabel rev-SelectStack \\\">  \\n  <select class=\\\"rev-Select \\\" id=\\\"widget_required_string\\\" multiple=\\\"\\\" name=\\\"widget[required_string][]\\\"><option value=\\\"hi\\\" selected>Hi</option><option value=\\\"hello\\\" selected>Hello</option></select>\\n  \\n  \\n</label>"
 
   See `text_input_stack/3` for more options.
   """
