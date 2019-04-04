@@ -235,7 +235,7 @@ defmodule Harmonium do
   defp error_helper(error) do
     case Application.get_env(:harmonium, :error_helper, nil) do
       nil ->
-        {message, opts} = error
+        {message, _opts} = error
         message
 
       error_helper ->
@@ -740,6 +740,8 @@ defmodule Harmonium do
       block
     end
   end
+
+  defdelegate pagination(conn, url, page_number, total_pages), to: Harmonium.Pagination
 
   @mock_form_default_form %Phoenix.HTML.Form{data: %{}, errors: [], name: "mock", id: "mock"}
   @mock_form_default_inputs %{

@@ -360,5 +360,17 @@ airports = [{"Louis Armstrong", "MSY"}, {"John F. Kennedy", "JFK"}]
         <% end %>
       <% end %>
     </section>
+
+    <section>
+      <%= row do %>
+        <%= col do %>
+          <h3>Pagination</h3>
+        <% end %>
+
+        <%= col do %>
+          <%= pagination(@conn, Routes.page_path(@conn, :index), 5, 10) %>
+        <% end %>
+      <% end %>
+    </section>
   <% end %>
 <% end %>
