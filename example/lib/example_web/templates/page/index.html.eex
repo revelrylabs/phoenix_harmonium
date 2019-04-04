@@ -327,5 +327,38 @@ airports = [{"Louis Armstrong", "MSY"}, {"John F. Kennedy", "JFK"}]
 
     </section>
 
+    <section>
+      <%= row do %>
+        <%= col do %>
+          <h3>Table</h3>
+        <% end %>
+
+        <%= col do %>
+          <%= table do %>
+            <%= table_head do %>
+              <%= table_row do %>
+                <%= table_header do: "ID" %>
+                <%= table_header do: "First Name" %>
+                <%= table_header do: "Last Name" %>
+              <% end %>
+            <% end %>
+            <%= table_body do %>
+              <%= for n <- 0..9 do %>
+                <%= table_row do %>
+                  <%= table_data do: n %>
+                  <%= table_data do: "John" %>
+                  <%= table_data do: "Doe#{n}" %>
+                <% end %>
+              <% end %>
+              <%= table_row do %>
+                <%= table_data do: "10" %>
+                <%= table_data do: "Jane" %>
+                <%= table_data do: "Doe" %>
+              <% end %>
+            <% end %>
+          <% end %>
+        <% end %>
+      <% end %>
+    </section>
   <% end %>
 <% end %>

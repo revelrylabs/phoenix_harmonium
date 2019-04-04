@@ -669,6 +669,78 @@ defmodule Harmonium do
     end
   end
 
+  def table do
+    content_tag(:table, "")
+  end
+
+  def table(opts \\ [], do: block) do
+    opts = Keyword.merge([class: "rev-Table"], opts)
+
+    content_tag :table, opts do
+      block
+    end
+  end
+
+  def table_head do
+    content_tag(:thead, "")
+  end
+
+  def table_head(opts \\ [], do: block) do
+    opts = Keyword.merge([class: "rev-Table-head"], opts)
+
+    content_tag :thead, opts do
+      block
+    end
+  end
+
+  def table_body do
+    content_tag(:tbody, "")
+  end
+
+  def table_body(opts \\ [], do: block) do
+    opts = Keyword.merge([class: "rev-Table-body"], opts)
+
+    content_tag :tbody, opts do
+      block
+    end
+  end
+
+  def table_row do
+    content_tag(:tr, "")
+  end
+
+  def table_row(opts \\ [], do: block) do
+    opts = Keyword.merge([class: "rev-Table-row"], opts)
+
+    content_tag :tr, opts do
+      block
+    end
+  end
+
+  def table_header do
+    content_tag(:th, "")
+  end
+
+  def table_header(opts \\ [], do: block) do
+    opts = Keyword.merge([class: "rev-Table-header"], opts)
+
+    content_tag :th, opts do
+      block
+    end
+  end
+
+  def table_data do
+    content_tag(:td, "")
+  end
+
+  def table_data(opts \\ [], do: block) do
+    opts = Keyword.merge([class: "rev-Table-Data"], opts)
+
+    content_tag :td, opts do
+      block
+    end
+  end
+
   @mock_form_default_form %Phoenix.HTML.Form{data: %{}, errors: [], name: "mock", id: "mock"}
   @mock_form_default_inputs %{
     empty: nil,
