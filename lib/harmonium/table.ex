@@ -27,7 +27,7 @@ defmodule Harmonium.Table do
     table_element(:td, [class: "rev-Table-Data"], opts, do: block)
   end
 
-  def table_element(tag, default_opts, opts, do: block) do
+  defp table_element(tag, default_opts, opts, do: block) do
     opts = Keyword.merge(default_opts, opts)
 
     content_tag tag, opts do
