@@ -669,6 +669,8 @@ defmodule Harmonium do
     end
   end
 
+  defdelegate pagination(conn, url, page_number, total_pages), to: Harmonium.Pagination
+
   @mock_form_default_form %Phoenix.HTML.Form{data: %{}, errors: [], name: "mock", id: "mock"}
   @mock_form_default_inputs %{
     empty: nil,
