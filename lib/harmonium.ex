@@ -669,7 +669,9 @@ defmodule Harmonium do
     end
   end
 
-  defdelegate table(opts \\ [], blocks), to: Harmonium.Table
+  defdelegate table_class(modifiers \\ []), to: Harmonium.Table
+
+  defdelegate table(modifiers \\ [], blocks), to: Harmonium.Table
 
   defdelegate table_head(opts \\ [], blocks), to: Harmonium.Table
 
