@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/revelrylabs/phoenix_harmonium.svg?branch=master)](https://travis-ci.org/revelrylabs/phoenix_harmonium)
 [![Hex.pm](https://img.shields.io/hexpm/dt/harmonium.svg)](https://hex.pm/packages/harmonium)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Coverage Status](https://coveralls.io/repos/github/revelrylabs/phoenix_harmonium/badge.svg?branch=master)](https://coveralls.io/github/revelrylabs/phoenix_harmonium?branch=master)
+[![Coverage Status](https://opencov.prod.revelry.net/projects/7/badge.svg)](https://opencov.prod.revelry.net/projects/7)
 
 Phoenix Framework view helpers for Harmonium-styled HTML without React.
 
