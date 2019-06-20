@@ -669,6 +669,9 @@ defmodule Harmonium do
     end
   end
 
+  defdelegate tabs_wrapper(opts), to: Harmonium.Tabs
+  defdelegate tab_item(name, opts \\ []), to: Harmonium.Tabs
+
   @mock_form_default_form %Phoenix.HTML.Form{data: %{}, errors: [], name: "mock", id: "mock"}
   @mock_form_default_inputs %{
     empty: nil,
