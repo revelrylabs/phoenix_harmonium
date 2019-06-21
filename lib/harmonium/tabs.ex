@@ -19,11 +19,11 @@ defmodule Harmonium.Tabs do
   @doc """
   Renders a wrapper for a list of tabs
 
-      iex> safe_to_string(tabs_wrapper(do: [])) =~ "rev-Tabs"
-      true
+      iex> safe_to_string(tabs_wrapper(do: []))
+      ~S(<div class="rev-Tabs"><ul class="rev-Tabs-titles"></ul></div>)
 
-      iex> safe_to_string(tabs_wrapper([class: "test"], do: [])) =~ "test"
-      true
+      iex> safe_to_string(tabs_wrapper([class: "test"], do: []))
+      ~S(<div class="rev-Tabs test"><ul class="rev-Tabs-titles"></ul></div>)
   """
   def tabs_wrapper(do: block), do: tabs_wrapper([], do: block)
 
@@ -38,14 +38,14 @@ defmodule Harmonium.Tabs do
   @doc """
   Renders a tab item
 
-      iex> safe_to_string(tab_item("First")) =~ "First"
-      true
+      iex> safe_to_string(tab_item("First"))
+      ~S(<li class="rev-TabsTitle"><a class="rev-TabsTitle-link" href="#">First</a></li>)
 
-      iex> safe_to_string(tab_item("Second", selected: true)) =~ "rev-TabsTitle--selected"
-      true
+      iex> safe_to_string(tab_item("Second", selected: true))
+      ~S(<li class="rev-TabsTitle rev-TabsTitle--selected"><a class="rev-TabsTitle-link" href="#">Second</a></li>)
 
-      iex> safe_to_string(tab_item("Second", phx_click: "handle_it")) =~ "phx-click"
-      true
+      iex> safe_to_string(tab_item("Second", phx_click: "handle_it"))
+      ~S(<li class="rev-TabsTitle" phx-click="handle_it"><a class="rev-TabsTitle-link" href="#">Second</a></li>)
   """
   def tab_item(name, opts \\ []) do
     {selected, opts} = Keyword.pop(opts, :selected, false)
