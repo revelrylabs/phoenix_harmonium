@@ -8,14 +8,14 @@ defmodule Harmonium.Table do
   @doc """
   Constructs a callout class.
 
-      iex> table_class() == "rev-Table"
-      true
+      iex> table_class()
+      "rev-Table"
 
-      iex> table_class(color: "blue") == "rev-Table rev-Table--colorblue"
-      true
+      iex> table_class(color: "blue")
+      "rev-Table rev-Table--colorblue"
 
-      iex> table_class(bold: true) == "rev-Table rev-Table--bold"
-      true
+      iex> table_class(bold: true)
+      "rev-Table rev-Table--bold"
   """
   def table_class(modifiers \\ []), do: Harmonium.rev_class("rev-Table", modifiers)
 
