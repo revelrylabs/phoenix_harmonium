@@ -3,11 +3,11 @@
 [![Build Status](https://travis-ci.org/revelrylabs/phoenix_harmonium.svg?branch=master)](https://travis-ci.org/revelrylabs/phoenix_harmonium)
 [![Hex.pm](https://img.shields.io/hexpm/dt/harmonium.svg)](https://hex.pm/packages/harmonium)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Coverage Status](https://coveralls.io/repos/github/revelrylabs/phoenix_harmonium/badge.svg?branch=master)](https://coveralls.io/github/revelrylabs/phoenix_harmonium?branch=master)
+[![Coverage Status](https://opencov.prod.revelry.net/projects/7/badge.svg)](https://opencov.prod.revelry.net/projects/7)
 
 Phoenix Framework view helpers for Harmonium-styled HTML without React.
 
-Harmonium was originally conceived as a set of styled React components ([harmonium.revelry.co](https://harmonium.revelry.co/)). This library brings the style and markup framework of Harmonium into Phoenix, but leaves the JavaScript behind.
+Harmonium was originally conceived as a set of styled React components ([harmonium.revelry.co](https://harmonium.revelry.co/)). This library brings the style and markup framework of Harmonium into Phoenix, but leaves the JavaScript behind. 
 
 Here are a just few of the features:
 
@@ -49,6 +49,8 @@ In `assets/app.scss`, import the SCSS:
 For more details, and a set of Starter Settings for configuring Harmonium styles, go to [harmonium.revelry.co](https://harmonium.revelry.co/)
 
 ## Example Usage
+
+Checkout the [documentation](https://hexdocs.pm/harmonium) for more examples and a full list of functions.
 
 ```elixir
 <%= form_for @changeset, @action, fn f -> %>
