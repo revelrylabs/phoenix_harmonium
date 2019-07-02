@@ -243,7 +243,7 @@ defmodule Harmonium do
       # this version was intended to take a function capture
       # like `MyAppWeb.ErrorHelpers.translate_error/1`,
       # but the tuple version is now preferred because
-      # function captures aren't supported in releases
+      # function captures in config.exs break the release process
       error_helper ->
         error_helper.(error)
     end
