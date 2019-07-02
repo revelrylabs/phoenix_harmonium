@@ -238,6 +238,12 @@ defmodule Harmonium do
         {message, opts} = error
         message
 
+      {module, function} -> apply(module, function, [error])
+
+      # this version was intended to take a function capture
+      # like `MyAppWeb.ErrorHelpers.translate_error/1`,
+      # but the tuple version is now preferred because
+      # function captures aren't supported in releases
       error_helper ->
         error_helper.(error)
     end
@@ -331,7 +337,12 @@ defmodule Harmonium do
       iex> text_input_stack(form_with_errors, :required_string) |> safe_to_string()
       "<label class=\\\"rev-InputLabel rev-InputStack is-invalid\\\">  \\n  <input class=\\\"rev-Input is-invalid\\\" id=\\\"widget_required_string\\\" name=\\\"widget[required_string]\\\" type=\\\"text\\\">\\n  <small class=\\\"rev-InputErrors\\\">can&#39;t be blank</small>\\n  \\n</label>"
 
-  If an error helper from the host application is configured, it is used to format errors.
+  If an error helper from the host application is configured, it is used to format errors. (TUPLE FORMAT)
+      iex> Application.put_env(:harmonium, :error_helper, {HarmoniumTest, :mock_translate_error})
+      iex> text_input_stack(form_with_errors, :required_string) |> safe_to_string()
+      "<label class=\\\"rev-InputLabel rev-InputStack is-invalid\\\">  \\n  <input class=\\\"rev-Input is-invalid\\\" id=\\\"widget_required_string\\\" name=\\\"widget[required_string]\\\" type=\\\"text\\\">\\n  <small class=\\\"rev-InputErrors\\\">This is a translated or formatted error</small>\\n  \\n</label>"
+
+  If an error helper from the host application is configured, it is used to format errors. (DEPRECATED FUNCTION CAPTURE FORMAT)
       iex> Application.put_env(:harmonium, :error_helper, &mock_translate_error/1)
       iex> text_input_stack(form_with_errors, :required_string) |> safe_to_string()
       "<label class=\\\"rev-InputLabel rev-InputStack is-invalid\\\">  \\n  <input class=\\\"rev-Input is-invalid\\\" id=\\\"widget_required_string\\\" name=\\\"widget[required_string]\\\" type=\\\"text\\\">\\n  <small class=\\\"rev-InputErrors\\\">This is a translated or formatted error</small>\\n  \\n</label>"
