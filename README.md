@@ -7,7 +7,7 @@
 
 Phoenix Framework view helpers for Harmonium-styled HTML without React.
 
-Harmonium was originally conceived as a set of styled React components ([harmonium.revelry.co](https://harmonium.revelry.co/)). This library brings the style and markup framework of Harmonium into Phoenix, but leaves the JavaScript behind. 
+Harmonium was originally conceived as a set of styled React components ([harmonium.revelry.co](https://harmonium.revelry.co/)). This library brings the style and markup framework of Harmonium into Phoenix, but leaves the JavaScript behind.
 
 Here are a just few of the features:
 
@@ -31,7 +31,7 @@ Then, in `config.exs`, pass in your Phoenix application's error translator funct
 
 ```
 config :harmonium,
-  error_helper: &YourAppWeb.ErrorHelpers.translate_error/1
+  error_helper: {YourAppWeb.ErrorHelpers, :translate_error}
 ```
 
 From your app's root directory, run this command to get the `harmonium` package from NPM, which contains the SCSS you'll need:
