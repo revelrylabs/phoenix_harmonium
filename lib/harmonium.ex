@@ -670,11 +670,14 @@ defmodule Harmonium do
   end
 
   defdelegate tabs_wrapper(opts), to: Harmonium.Tabs
-  defdelegate tabs_wrapper(tag, opts), to: Harmonium.Tabs
+  defdelegate tabs_wrapper(modifiers, opts), to: Harmonium.Tabs
+  defdelegate tabs_wrapper(tag, modifiers, opts), to: Harmonium.Tabs
   defdelegate tabs_titles(opts), to: Harmonium.Tabs
-  defdelegate tabs_titles(tag, opts), to: Harmonium.Tabs
+  defdelegate tabs_titles(modifiers, opts), to: Harmonium.Tabs
+  defdelegate tabs_titles(tag, modifiers, opts), to: Harmonium.Tabs
   defdelegate tabs_title(opts), to: Harmonium.Tabs
-  defdelegate tabs_title(tag, opts), to: Harmonium.Tabs
+  defdelegate tabs_title(modifiers, opts), to: Harmonium.Tabs
+  defdelegate tabs_title(tag, modifiers, opts), to: Harmonium.Tabs
   defdelegate tabs_title_link(name), to: Harmonium.Tabs
   defdelegate tabs_title_link(name, opts), to: Harmonium.Tabs
 
