@@ -16,44 +16,94 @@ defmodule Harmonium.Tabs do
   import Phoenix.HTML.Tag, only: [content_tag: 3]
   import Phoenix.HTML.Link, only: [link: 2]
 
+  @tabs_wrapper_class "rev-Tabs"
+  @tabs_titles_class "rev-Tabs-titles"
+  @tabs_title_class "rev-Tabs-title"
+  @tabs_title_link_class "rev-TabsTitle-link"
+
+  def tabs_wrapper_class(modifiers \\ []), do: rev_class(@tabs_wrapper_class, modifiers)
+  def tabs_titles_class(modifiers \\ []), do: rev_class(@tabs_titles_class, modifiers)
+  def tabs_title_class(modifiers \\ []), do: rev_class(@tabs_title_class, modifiers)
+  def tabs_title_link_class(modifiers \\ []), do: rev_class(@tabs_title_link_class, modifiers)
+
   @doc """
   Renders a wrapper for a list of tabs
 
-      iex> safe_to_string(tabs_wrapper(do: []))
-      ~S(<div class="rev-Tabs"><ul class="rev-Tabs-titles"></ul></div>)
+      iex> safe_to_string(tabs_wrapper(do: "test"))
+      ~S(<div class="rev-Tabs">test</div>)
 
-      iex> safe_to_string(tabs_wrapper([class: "test"], do: []))
-      ~S(<div class="rev-Tabs test"><ul class="rev-Tabs-titles"></ul></div>)
+      iex> safe_to_string(tabs_wrapper(bold: true, do: "test"))
+      ~S(<div class="rev-Tabs rev-Tabs--bold">test</div>)
+
+      iex> safe_to_string(tabs_wrapper(color: "black", do: "test"))
+      ~S(<div class="rev-Tabs rev-Tabs--colorblack">test</div>)
+
+      iex> safe_to_string(tabs_wrapper(:section, color: "black", do: "test"))
+      ~S(<section class="rev-Tabs rev-Tabs--colorblack">test</section>)
   """
-  def tabs_wrapper(do: block), do: tabs_wrapper([], do: block)
+  def tabs_wrapper(opts), do: tabs_wrapper(:div, opts)
 
-  def tabs_wrapper(opts \\ [], do: block) do
-    content_tag(:div, class: rev_class("rev-Tabs", opts)) do
-      content_tag(:ul, class: "rev-Tabs-titles") do
-        block
-      end
+  def tabs_wrapper(tag, opts) do
+    {block, modifiers} = Keyword.pop(opts, :do, [])
+    content_tag(tag, class: tabs_wrapper_class(modifiers)) do
+      block
+    end
+  end
+
+
+  @doc """
+  Renders a tabs titles wrapper
+
+      iex> safe_to_string(tabs_titles(do: "test"))
+      ~S(<ul class="rev-Tabs-titles">test</ul>)
+
+      iex> safe_to_string(tabs_titles(bold: true, do: "test"))
+      ~S(<ul class="rev-Tabs-titles rev-Tabs-titles--bold">test</ul>)
+
+      iex> safe_to_string(tabs_titles(color: "black", do: "test"))
+      ~S(<ul class="rev-Tabs-titles rev-Tabs-titles--colorblack">test</ul>)
+  """
+  def tabs_titles(opts), do:  tabs_titles(:ul, opts)
+
+  def tabs_titles(tag, opts) do
+    {block, modifiers} = Keyword.pop(opts, :do, [])
+    content_tag(tag, class: tabs_titles_class(modifiers)) do
+      block
     end
   end
 
   @doc """
-  Renders a tab item
+  Renders a tab title
 
-      iex> safe_to_string(tab_item("First"))
-      ~S(<li class="rev-TabsTitle"><a class="rev-TabsTitle-link" href="#">First</a></li>)
+      iex> safe_to_string(tabs_title(do: "test"))
+      ~S(<li class="rev-Tabs-title">test</li>)
 
-      iex> safe_to_string(tab_item("Second", selected: true))
-      ~S(<li class="rev-TabsTitle rev-TabsTitle--selected"><a class="rev-TabsTitle-link" href="#">Second</a></li>)
-
-      iex> safe_to_string(tab_item("Second", phx_click: "handle_it"))
-      ~S(<li class="rev-TabsTitle" phx-click="handle_it"><a class="rev-TabsTitle-link" href="#">Second</a></li>)
+      iex> safe_to_string(tabs_title(selected: true, do: "test"))
+      ~S(<li class="rev-Tabs-title rev-Tabs-title--selected">test</li>)
   """
-  def tab_item(name, opts \\ []) do
-    {selected, opts} = Keyword.pop(opts, :selected, false)
-    {to, opts} = Keyword.pop(opts, :to, "#")
-    opts = Keyword.merge(opts, class: rev_class("rev-TabsTitle", selected: selected))
+  def tabs_title(opts), do: tabs_title(:li, opts)
 
-    content_tag(:li, opts) do
-      link(name, to: to, class: "rev-TabsTitle-link")
+  def tabs_title(tag, opts) do
+    {block, modifiers} = Keyword.pop(opts, :do, [])
+    content_tag(tag, class: tabs_title_class(modifiers)) do
+      block
     end
+  end
+
+  @doc """
+  Renders a tab title
+
+      iex> safe_to_string(tabs_title_link("Name", to: "#"))
+      ~S(<a class="rev-TabsTitle-link" href="#">Name</a>)
+
+      iex> safe_to_string(tabs_title_link("Name", to: "#"))
+      ~S(<a class="rev-TabsTitle-link" href="#">Name</a>)
+
+      iex> safe_to_string(tabs_title_link("Name", to: "#", phx_click: "handle_it"))
+      ~S(<a class="rev-TabsTitle-link" href="#" phx-click="handle_it">Name</a>)
+  """
+  def tabs_title_link(name, opts \\ []) do
+    opts = Keyword.put(opts, :class, @tabs_title_link_class)
+    link(name, opts)
   end
 end
