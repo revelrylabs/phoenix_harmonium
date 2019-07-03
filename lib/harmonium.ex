@@ -235,7 +235,7 @@ defmodule Harmonium do
   defp error_helper(error) do
     case Application.get_env(:harmonium, :error_helper, nil) do
       nil ->
-        {message, opts} = error
+        {message, _opts} = error
         message
 
       error_helper ->
@@ -670,7 +670,13 @@ defmodule Harmonium do
   end
 
   defdelegate tabs_wrapper(opts), to: Harmonium.Tabs
-  defdelegate tab_item(name, opts \\ []), to: Harmonium.Tabs
+  defdelegate tabs_wrapper(tag, opts), to: Harmonium.Tabs
+  defdelegate tabs_titles(opts), to: Harmonium.Tabs
+  defdelegate tabs_titles(tag, opts), to: Harmonium.Tabs
+  defdelegate tabs_title(opts), to: Harmonium.Tabs
+  defdelegate tabs_title(tag, opts), to: Harmonium.Tabs
+  defdelegate tabs_title_link(name), to: Harmonium.Tabs
+  defdelegate tabs_title_link(name, opts), to: Harmonium.Tabs
 
   @mock_form_default_form %Phoenix.HTML.Form{data: %{}, errors: [], name: "mock", id: "mock"}
   @mock_form_default_inputs %{
