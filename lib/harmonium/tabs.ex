@@ -7,8 +7,14 @@ defmodule Harmonium.Tabs do
 
   ```
   <%= tabs_wrapper do %>
-    <%= tab_item "First", selected: true, to: page_path(@conn, :styleguide, tab: "first") %>
-    <%= tab_item "Second", to: page_path(@conn, :styleguide, tab: "second") %>
+    <%= tabs_titles do %>
+      <%= tabs_title selected: true do %>
+        <%= tab_item "First", to: page_path(@conn, :styleguide, tab: "first") %>
+      <% end %>
+      <%= tabs_title do %>
+        <%= tab_item "Second", to: page_path(@conn, :styleguide, tab: "second") %>
+      <% end %>
+    <% end %>
   <% end %>
   ```
   """
