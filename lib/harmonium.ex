@@ -358,11 +358,11 @@ defmodule Harmonium do
     input_stack(&password_input/3, @input_class, @input_stack_class, f, key, options)
   end
 
-  @doc """
+  @doc ~S"""
   Renders a textarea stack.
 
       iex> textarea_stack(f, :required_string) |> safe_to_string()
-      "<label class=\\\"rev-InputLabel rev-TextareaStack \\\">  \\n  <textarea class=\\\"rev-Textarea \\\" id=\\\"widget_required_string\\\" name=\\\"widget[required_string]\\\">\\nhello</textarea>\\n  \\n  \\n</label>"
+      "<label class=\"rev-InputLabel rev-TextareaStack \">  \n  <textarea class=\"rev-Textarea \" id=\"widget_required_string\" name=\"widget[required_string]\">\nhello</textarea>\n  \n  \n</label>"
 
   See `text_input_stack/3` for more options.
   """
@@ -370,11 +370,11 @@ defmodule Harmonium do
     input_stack(&textarea/3, @textarea_class, @textarea_stack_class, f, key, options)
   end
 
-  @doc """
+  @doc ~S"""
   Renders an email input stack.
 
       iex> text_input_stack(f, :required_string) |> safe_to_string()
-      "<label class=\\\"rev-InputLabel rev-InputStack \\\">  \\n  <input class=\\\"rev-Input \\\" id=\\\"widget_required_string\\\" name=\\\"widget[required_string]\\\" type=\\\"text\\\" value=\\\"hello\\\">\\n  \\n  \\n</label>"
+      "<label class=\"rev-InputLabel rev-InputStack \">  \n  <input class=\"rev-Input \" id=\"widget_required_string\" name=\"widget[required_string]\" type=\"text\" value=\"hello\">\n  \n  \n</label>"
 
   See `text_input_stack/3` for more options.
   """
@@ -407,14 +407,14 @@ defmodule Harmonium do
     input_stack(&telephone_input/3, @input_class, @input_stack_class, f, key, options)
   end
 
-  @doc """
+  @doc ~S"""
   Similar usage to `text_input_stack/3`, but it also passes `value_options` through to `Phoenix.HTML.Form.select/4`.
 
-    iex> select_stack(f, :required_string, ["Hi": "hi", "Hello": "hello"]) |> safe_to_string()
-    "<label class=\\\"rev-InputLabel rev-SelectStack \\\">  \\n  <select class=\\\"rev-Select \\\" id=\\\"widget_required_string\\\" name=\\\"widget[required_string]\\\"><option value=\\\"hi\\\">Hi</option><option value=\\\"hello\\\" selected>Hello</option></select>\\n  \\n  \\n</label>"
+      iex> select_stack(f, :required_string, ["Hi": "hi", "Hello": "hello"]) |> safe_to_string()
+      "<label class=\"rev-InputLabel rev-SelectStack \">  \n  <select class=\"rev-Select \" id=\"widget_required_string\" name=\"widget[required_string]\"><option value=\"hi\">Hi</option><option value=\"hello\" selected>Hello</option></select>\n  \n  \n</label>"
 
-    iex> select_stack(f, :required_string, ["Hi": "hi", "Hello": "hello"], input: [value: "hello"]) |> safe_to_string()
-    "<label class=\\\"rev-InputLabel rev-SelectStack \\\">  \\n  <select class=\\\"rev-Select \\\" id=\\\"widget_required_string\\\" name=\\\"widget[required_string]\\\"><option value=\\\"hi\\\">Hi</option><option value=\\\"hello\\\" selected>Hello</option></select>\\n  \\n  \\n</label>"
+      iex> select_stack(f, :required_string, ["Hi": "hi", "Hello": "hello"], input: [value: "hello"]) |> safe_to_string()
+      "<label class=\"rev-InputLabel rev-SelectStack \">  \n  <select class=\"rev-Select \" id=\"widget_required_string\" name=\"widget[required_string]\"><option value=\"hi\">Hi</option><option value=\"hello\" selected>Hello</option></select>\n  \n  \n</label>"
 
   See `text_input_stack/3` for more options.
   """
