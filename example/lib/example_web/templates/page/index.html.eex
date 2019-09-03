@@ -167,40 +167,54 @@ airports = [{"Louis Armstrong", "MSY"}, {"John F. Kennedy", "JFK"}]
 
         <%= row do %>
           <%= col do %>
-            <h4><strong>Input Groups (no helpers yet)</strong></h4>
-          <% end %>
-
-          <%= col do %>
-            <label class="rev-InputLabel">
-              <span class="rev-LabelText">Input Group</span>
-              <div class="rev-InputGroup">
-                <select class="rev-Select rev-InputGroup-field">
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                </select>
-                <input class="rev-Input rev-InputGroup-field" placeholder="Placeholder"/>
-                <div class="rev-InputGroup-button">
-                  <button class="rev-Button">Button</button>
-                </div>
-              </div>
-              <small class="rev-InputHelpText rev-HelpText">Help text goes here</small>
-            </label>
-          <% end %>
-
-          <%= col do %>
-            <div class="rev-InputGroup">
-              <span class="rev-InputGroup-label Prefix">$</span>
-              <input type="number" class="rev-InputGroup-field rev-Input" value="100">
-              <div class="rev-InputGroup-button">
-                <button class="rev-Button rev-Button--secondary">Cancel</button>
-              </div>
-              <div class="rev-InputGroup-button">
-                <button class="rev-Button">Save</button>
-              </div>
-            </div>
+            <h4><strong>Input Groups</strong></h4>
+            <p>
+              <strong>Note:</strong> There are slight differences in the <code>input_group_field</code> markup.
+              Find supplemental styles for <code>rev-InputGroup-fieldWrapper</code> in app.scss.
+            </p>
           <% end %>
         <% end %>
+
+        <%= row do %>
+          <%= col do %>
+            <%= input_group_stack f, :airport, label: "Input Group Stack", help: "Help text goes here" do %>
+              <%= input_group_field do %>
+                <%= select f, :airport, airports %>
+              <% end %>
+              <%= input_group_field do %>
+                <%= text_input f, :something, placeholder: "Placeholder" %>
+              <% end %>
+              <%= input_group_button do %>
+                <button class="rev-Button">Button</button>
+              <% end %>
+            <% end %>
+          <% end %>
+        <% end %>
+
+        <%= row do %>
+          <%= col do %>
+            <p>
+              Standalone input group w/o stack
+            </p>
+          <% end %>
+        <% end %>
+        <%= row do %>
+          <%= col do %>
+            <%= input_group do %>
+              <%= input_group_label class: "Prefix" do %>$<% end %>
+              <%= input_group_field do %>
+                <%= text_input f, :int, type: :number %>
+              <% end %>
+              <%= input_group_button do %>
+                <button class="rev-Button rev-Button--secondary">Cancel</button>
+              <% end %>
+              <%= input_group_button do %>
+                <button class="rev-Button">Save</button>
+              <% end %>
+            <% end %>
+          <% end %>
+        <% end %>
+        <%# end input groups %>
 
         <%= row do %>
           <%= col do %>

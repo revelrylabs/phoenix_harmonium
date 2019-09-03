@@ -6,6 +6,7 @@ defmodule Harmonium do
   import Phoenix.HTML
   import Phoenix.HTML.Form
   import Phoenix.HTML.Tag
+  alias Harmonium.InputGroup
 
   @row_class "rev-Row"
   @col_class "rev-Col"
@@ -35,6 +36,17 @@ defmodule Harmonium do
   @drawer_expander_class "#{@drawer_class}-expander"
   @drawer_contents_class "#{@drawer_class}-contents"
   @icon_class "rev-Icon"
+
+  defdelegate input_group(block), to: InputGroup
+  defdelegate input_group(modifiers, block), to: InputGroup
+  defdelegate input_group_label(block), to: InputGroup
+  defdelegate input_group_label(modifiers, block), to: InputGroup
+  defdelegate input_group_field(block), to: InputGroup
+  defdelegate input_group_field(modifiers, block), to: InputGroup
+  defdelegate input_group_button(block), to: InputGroup
+  defdelegate input_group_button(modifiers, block), to: InputGroup
+  defdelegate input_group_stack(f, key, block), to: InputGroup
+  defdelegate input_group_stack(f, key, modifiers, block), to: InputGroup
 
   @doc """
   Constructs a CSS class with SUIT modifiers.
@@ -262,7 +274,7 @@ defmodule Harmonium do
   # See `text_input_stack/3` and `select_stack/4` for example usage.
   # For other, less uniform input types, you may have to write something more custom.
   # In those cases, this function's code can still be a good reference example.
-  defp input_stack(func, input_class, stack_class, f, key, options, value_options \\ nil) do
+  def input_stack(func, input_class, stack_class, f, key, options, value_options \\ nil) do
     error = extract_error(f, key)
 
     validity_class = if error, do: @invalid_class, else: ""
