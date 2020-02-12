@@ -196,14 +196,16 @@ defmodule Harmonium do
   Renders an input label.
   """
   def rev_label(modifiers, do: block) do
-
-    for_attr = modifiers
-      |> Keyword.get(:for)
-
-    class = modifiers
-      |> Keyword.take(:class)
-
     content_tag :label, class: rev_label_class(class), for: for_attr do
+      block
+    end
+  end
+
+  @doc """
+  Renders an input label with a for attribute.
+  """
+  def rev_label(f, key, modifiers, do: block) do
+    label f, key, class: rev_label_class(modifiers) do
       block
     end
   end
@@ -482,13 +484,7 @@ defmodule Harmonium do
           end
       end
 
-      for_attr =
-        case options[:for] do
-            nil -> nil
-            text -> text
-            end
-
-    rev_label class: "rev-Checkbox", for: for_attr do
+    rev_label f, key, class: "rev-Checkbox" do
       ~E"<%= box %><%= label %>"
     end
   end
