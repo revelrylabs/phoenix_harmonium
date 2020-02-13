@@ -458,12 +458,12 @@ defmodule Harmonium do
   Render a single checkbox.
 
       iex> single_checkbox(f, :bool) |> safe_to_string()
-      "<label class=\\\"rev-InputLabel rev-Checkbox\\\"><input name=\\\"widget[bool]\\\" type=\\\"hidden\\\" value=\\\"false\\\"><input class=\\\"rev-Checkbox-input\\\" id=\\\"widget_bool\\\" name=\\\"widget[bool]\\\" type=\\\"checkbox\\\" value=\\\"true\\\"></label>"
+      "<label class=\\\"rev-InputLabel rev-Checkbox\\\" for=\\\"widget_bool\\\"><input name=\\\"widget[bool]\\\" type=\\\"hidden\\\" value=\\\"false\\\"><input class=\\\"rev-Checkbox-input\\\" id=\\\"widget_bool\\\" name=\\\"widget[bool]\\\" type=\\\"checkbox\\\" value=\\\"true\\\"></label>"
 
   You may optionally add a label:
 
       iex> single_checkbox(f, :bool, label: "Publish?") |> safe_to_string()
-      "<label class=\\\"rev-InputLabel rev-Checkbox\\\"><input name=\\\"widget[bool]\\\" type=\\\"hidden\\\" value=\\\"false\\\"><input class=\\\"rev-Checkbox-input\\\" id=\\\"widget_bool\\\" name=\\\"widget[bool]\\\" type=\\\"checkbox\\\" value=\\\"true\\\"><span class=\\\"rev-Checkbox-label\\\">Publish?</span></label>"
+      "<label class=\\\"rev-InputLabel rev-Checkbox\\\" for=\\\"widget_bool\\\"><input name=\\\"widget[bool]\\\" type=\\\"hidden\\\" value=\\\"false\\\"><input class=\\\"rev-Checkbox-input\\\" id=\\\"widget_bool\\\" name=\\\"widget[bool]\\\" type=\\\"checkbox\\\" value=\\\"true\\\"><span class=\\\"rev-Checkbox-label\\\">Publish?</span></label>"
   """
   def single_checkbox(f, key, options \\ []) do
     input_options =
