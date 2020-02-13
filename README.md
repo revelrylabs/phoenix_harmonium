@@ -22,7 +22,7 @@ Add `harmonium` to your list of dependencies in `mix.exs` before running `mix de
 ```elixir
 def deps do
   [
-    {:harmonium, "~> 2.1.0"}
+    {:harmonium, "~> 2.1.1"}
   ]
 end
 ```
