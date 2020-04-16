@@ -327,5 +327,24 @@ airports = [{"Louis Armstrong", "MSY"}, {"John F. Kennedy", "JFK"}]
 
     </section>
 
+    <section>
+      <%= row do %>
+        <%= col do %>
+          <h3>Tabs</h3>
+        <% end %>
+        <%= col do %>
+          <%= tabs_wrapper do %>
+            <%= tabs_titles do %>
+              <%= tabs_title selected: true do %>
+                <%= tabs_title_link "Phoenix Harmonium", to: "https://github.com/revelrylabs/phoenix_harmonium" %>
+              <% end %>
+              <%= tabs_title do %>
+                <%= tabs_title_link "Ecto Soft Delete", to: "https://github.com/revelrylabs/ecto_soft_delete" %>
+              <% end %>
+            <% end %>
+          <% end %>
+        <% end %>
+      <% end %>
+    </section>
   <% end %>
 <% end %>
