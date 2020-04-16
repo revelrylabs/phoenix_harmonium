@@ -673,13 +673,23 @@ defmodule Harmonium do
 
   defdelegate table(modifiers \\ []), to: Harmonium.Table
 
+  defdelegate table_head_class(modifiers \\ []), to: Harmonium.Table
+
   defdelegate table_head(opts \\ []), to: Harmonium.Table
+
+  defdelegate table_body_class(modifiers \\ []), to: Harmonium.Table
 
   defdelegate table_body(opts \\ []), to: Harmonium.Table
 
+  defdelegate table_row_class(modifiers \\ []), to: Harmonium.Table
+
   defdelegate table_row(opts \\ []), to: Harmonium.Table
 
+  defdelegate table_header_class(modifiers \\ []), to: Harmonium.Table
+
   defdelegate table_header(opts \\ []), to: Harmonium.Table
+
+  defdelegate table_data_class(modifiers \\ []), to: Harmonium.Table
 
   defdelegate table_data(opts \\ []), to: Harmonium.Table
 
