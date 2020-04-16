@@ -671,17 +671,17 @@ defmodule Harmonium do
 
   defdelegate table_class(modifiers \\ []), to: Harmonium.Table
 
-  defdelegate table(modifiers \\ [], blocks), to: Harmonium.Table
+  defdelegate table(modifiers \\ []), to: Harmonium.Table
 
-  defdelegate table_head(opts \\ [], blocks), to: Harmonium.Table
+  defdelegate table_head(opts \\ []), to: Harmonium.Table
 
-  defdelegate table_body(opts \\ [], blocks), to: Harmonium.Table
+  defdelegate table_body(opts \\ []), to: Harmonium.Table
 
-  defdelegate table_row(opts \\ [], blocks), to: Harmonium.Table
+  defdelegate table_row(opts \\ []), to: Harmonium.Table
 
-  defdelegate table_header(opts \\ [], blocks), to: Harmonium.Table
+  defdelegate table_header(opts \\ []), to: Harmonium.Table
 
-  defdelegate table_data(opts \\ [], blocks), to: Harmonium.Table
+  defdelegate table_data(opts \\ []), to: Harmonium.Table
 
   @mock_form_default_form %Phoenix.HTML.Form{data: %{}, errors: [], name: "mock", id: "mock"}
   @mock_form_default_inputs %{

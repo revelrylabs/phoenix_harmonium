@@ -25,13 +25,18 @@ defmodule Harmonium.Table do
       iex> safe_to_string(table(do: []))
       ~S(<table class="rev-Table"></table>)
   """
-  def table(modifiers \\ [], do: block), do: table(:table, modifiers, do: block)
+  def table(opts \\ []), do: table_element(:table, :table_class, opts)
 
-  def table(tag, modifiers, do: block) do
-    content_tag tag, class: table_class(modifiers) do
-      block
-    end
-  end
+  @doc """
+  Constructs a table head class.
+
+      iex> table_head_class()
+      "rev-Table-head"
+
+      iex> table_head_class(stacked: true)
+      "rev-Table-head rev-Table-head--stacked"
+  """
+  def table_head_class(modifiers \\ []), do: Harmonium.rev_class("rev-Table-head", modifiers)
 
   @doc """
   Renders a table head element (<thead>).
@@ -39,9 +44,18 @@ defmodule Harmonium.Table do
       iex> safe_to_string(table_head(do: []))
       ~S(<thead class="rev-Table-head"></thead>)
   """
-  def table_head(opts \\ [], do: block) do
-    table_element(:thead, [class: "rev-Table-head"], opts, do: block)
-  end
+  def table_head(opts \\ []), do: table_element(:thead, :table_head_class, opts)
+
+  @doc """
+  Constructs a table body class.
+
+      iex> table_body_class()
+      "rev-Table-body"
+
+      iex> table_body_class(stacked: true)
+      "rev-Table-body rev-Table-body--stacked"
+  """
+  def table_body_class(modifiers \\ []), do: Harmonium.rev_class("rev-Table-body", modifiers)
 
   @doc """
   Renders a table body element (<tbody>).
@@ -49,9 +63,18 @@ defmodule Harmonium.Table do
       iex> safe_to_string(table_body(do: []))
       ~S(<tbody class="rev-Table-body"></tbody>)
   """
-  def table_body(opts \\ [], do: block) do
-    table_element(:tbody, [class: "rev-Table-body"], opts, do: block)
-  end
+  def table_body(opts \\ []), do: table_element(:tbody, :table_body_class, opts)
+
+  @doc """
+  Constructs a table row class.
+
+      iex> table_row_class()
+      "rev-Table-row"
+
+      iex> table_row_class(stacked: true)
+      "rev-Table-row rev-Table-row--stacked"
+  """
+  def table_row_class(modifiers \\ []), do: Harmonium.rev_class("rev-Table-row", modifiers)
 
   @doc """
   Renders a table row element (<tr>).
@@ -59,9 +82,18 @@ defmodule Harmonium.Table do
       iex> safe_to_string(table_row(do: []))
       ~S(<tr class="rev-Table-row"></tr>)
   """
-  def table_row(opts \\ [], do: block) do
-    table_element(:tr, [class: "rev-Table-row"], opts, do: block)
-  end
+  def table_row(opts \\ []), do: table_element(:tr, :table_row_class, opts)
+
+  @doc """
+  Constructs a table header class.
+
+      iex> table_header_class()
+      "rev-Table-header"
+
+      iex> table_header_class(stacked: true)
+      "rev-Table-header rev-Table-header--stacked"
+  """
+  def table_header_class(modifiers \\ []), do: Harmonium.rev_class("rev-Table-header", modifiers)
 
   @doc """
   Renders a table header element (<th>).
@@ -69,25 +101,44 @@ defmodule Harmonium.Table do
       iex> safe_to_string(table_header(do: []))
       ~S(<th class="rev-Table-header"></th>)
   """
-  def table_header(opts \\ [], do: block) do
-    table_element(:th, [class: "rev-Table-header"], opts, do: block)
-  end
+  def table_header(opts \\ []), do: table_element(:th, :table_header_class, opts)
+
+  @doc """
+  Constructs a table data class.
+
+      iex> table_data_class()
+      "rev-Table-data"
+
+      iex> table_data_class(stacked: true)
+      "rev-Table-data rev-Table-data--stacked"
+  """
+  def table_data_class(modifiers \\ []), do: Harmonium.rev_class("rev-Table-data", modifiers)
 
   @doc """
   Renders a table data element (<td>).
 
+      iex> safe_to_string(table_data)
+      ~S(<td class="rev-Table-data"></td>)
+
+      iex> safe_to_string(table_data(attrs: [colspan: 2]))
+      ~S(<td class="rev-Table-data" colspan="2"></td>)
+
       iex> safe_to_string(table_data(do: []))
-      ~S(<td class="rev-Table-Data"></td>)
+      ~S(<td class="rev-Table-data"></td>)
 
-      iex> safe_to_string(table_data([colspan: 2], do: 1))
-      ~S(<td class="rev-Table-Data" colspan="2">1</td>)
+      iex> safe_to_string(table_data(bold: true, attrs: [colspan: 2], do: []))
+      ~S(<td class="rev-Table-data rev-Table-data--bold" colspan="2"></td>)
+
+      iex> safe_to_string(table_data(bold: true, italic: true, attrs: [colspan: 2], do: []))
+      ~S(<td class="rev-Table-data rev-Table-data--bold rev-Table-data--italic" colspan="2"></td>)
   """
-  def table_data(opts \\ [], do: block) do
-    table_element(:td, [class: "rev-Table-Data"], opts, do: block)
-  end
+  def table_data(opts \\ []), do: table_element(:td, :table_data_class, opts)
 
-  defp table_element(tag, default_opts, opts, do: block) do
-    opts = Keyword.merge(default_opts, opts)
+  defp table_element(tag, class_function, opts) do
+    {block, opts} = Keyword.pop(opts, :do, [])
+    {attrs, modifiers} = Keyword.pop(opts, :attrs, [])
+    modifier_classes = apply(__MODULE__, class_function, [modifiers])
+    opts = Keyword.merge(attrs, [class: modifier_classes])
 
     content_tag tag, opts do
       block
