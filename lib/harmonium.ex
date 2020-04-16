@@ -244,7 +244,7 @@ defmodule Harmonium do
   defp error_helper(error) do
     case Application.get_env(:harmonium, :error_helper, nil) do
       nil ->
-        {message, opts} = error
+        {message, _opts} = error
         message
 
       {module, function} -> apply(module, function, [error])
@@ -688,6 +688,30 @@ defmodule Harmonium do
       """
     end
   end
+
+  defdelegate table_class(modifiers \\ []), to: Harmonium.Table
+
+  defdelegate table(modifiers \\ []), to: Harmonium.Table
+
+  defdelegate table_head_class(modifiers \\ []), to: Harmonium.Table
+
+  defdelegate table_head(opts \\ []), to: Harmonium.Table
+
+  defdelegate table_body_class(modifiers \\ []), to: Harmonium.Table
+
+  defdelegate table_body(opts \\ []), to: Harmonium.Table
+
+  defdelegate table_row_class(modifiers \\ []), to: Harmonium.Table
+
+  defdelegate table_row(opts \\ []), to: Harmonium.Table
+
+  defdelegate table_header_class(modifiers \\ []), to: Harmonium.Table
+
+  defdelegate table_header(opts \\ []), to: Harmonium.Table
+
+  defdelegate table_data_class(modifiers \\ []), to: Harmonium.Table
+
+  defdelegate table_data(opts \\ []), to: Harmonium.Table
 
   @mock_form_default_form %Phoenix.HTML.Form{data: %{}, errors: [], name: "mock", id: "mock"}
   @mock_form_default_inputs %{
