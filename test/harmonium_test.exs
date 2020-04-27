@@ -22,7 +22,7 @@ defmodule HarmoniumTest do
   use ExUnit.Case
   import Harmonium
   import Phoenix.HTML, only: [safe_to_string: 1]
-  import Phoenix.HTML.Form, only: [form_for: 3]
+  import Phoenix.HTML.Form, only: [form_for: 4]
 
   def changeset(attrs \\ %{required_string: "hello"}) do
     Widget.new(attrs)
