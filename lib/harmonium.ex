@@ -837,7 +837,7 @@ defmodule Harmonium do
         impl: nil,
         index: nil,
         name: "mock",
-        options: [],
+        options: [multipart: true],
         params: %{},
         source: nil
       }
