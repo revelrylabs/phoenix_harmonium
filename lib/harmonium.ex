@@ -726,7 +726,7 @@ defmodule Harmonium do
 
   defdelegate table_data(opts \\ []), to: Harmonium.Table
 
-  @mock_form_default_form %Phoenix.HTML.Form{data: %{}, errors: [], name: "mock", id: "mock"}
+  @mock_form_default_form %Phoenix.HTML.Form{data: %{}, errors: [], name: "mock", id: "mock", options: [multipart: true]}
   @mock_form_default_inputs %{
     empty: nil,
     string: "Hello, World!",
