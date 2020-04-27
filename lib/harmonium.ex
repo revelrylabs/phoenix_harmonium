@@ -417,6 +417,19 @@ defmodule Harmonium do
   end
 
   @doc """
+  Renders a file input stack.
+
+      iex> file_input_stack(f, :required_string) |> safe_to_string()
+      "<label class=\\\"rev-InputLabel rev-InputStack \\\">  \\n  <input class=\\\"rev-Input \\\" id=\\\"widget_required_string\\\" name=\\\"widget[required_string]\\\" type=\\\"file\\\">\\n  \\n  \\n</label>"
+
+  See `text_input_stack/3` for more options.
+  """
+
+  def file_input_stack(f, key, options \\ []) do
+    input_stack(&file_input/3, @input_class, @input_stack_class, f, key, options)
+  end
+
+  @doc """
   Similar usage to `text_input_stack/3`, but it also passes `value_options` through to `Phoenix.HTML.Form.select/4`.
 
     iex> select_stack(f, :required_string, ["Hi": "hi", "Hello": "hello"]) |> safe_to_string()
