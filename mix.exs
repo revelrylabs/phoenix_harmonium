@@ -6,8 +6,8 @@ defmodule Harmonium.MixProject do
   def project do
     [
       app: :harmonium,
-      version: "2.1.1",
-      elixir: "~> 1.7",
+      version: "2.2.0",
+      elixir: "~> 1.12",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
       package: package(),
@@ -32,9 +32,10 @@ defmodule Harmonium.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:phoenix_html, "~> 2.11"},
+      {:phoenix_html, "~> 3.1"},
+      {:phoenix_live_view, "~> 0.17.5"},
       {:excoveralls, "~> 0.10.4", only: :test},
-      {:phoenix_ecto, "~> 3.0", only: :test},
+      {:phoenix_ecto, "~> 4.4", only: :test},
       {:ex_doc, "~> 0.20.0", only: :dev}
     ]
   end
