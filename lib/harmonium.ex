@@ -287,6 +287,9 @@ defmodule Harmonium do
       |> Keyword.get(:input, [])
       |> Keyword.put(:class, "#{input_class} #{validity_class}")
 
+    required? = Keyword.get(input_options, :required, false)
+    required_class = if required?, do: " is-required", else: ""
+
     input =
       case value_options do
         nil -> func.(f, key, input_options)
@@ -305,7 +308,7 @@ defmodule Harmonium do
         value -> rev_help_text(do: value)
       end
 
-    rev_label class: "#{stack_class} #{validity_class}" do
+    rev_label class: "#{stack_class} #{validity_class}#{required_class}" do
       ~E"""
         <%= label_text %>
         <%= input %>
