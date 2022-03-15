@@ -438,7 +438,7 @@ defmodule Harmonium do
   Same as `select_stack/4`, but renders the input as a `<select multiple>` and submits the list of all selected options.
 
     iex> multiple_select_stack(f, :required_string, ["Hi": "hi", "Hello": "hello"], label: "Greetings", input: [required: true]) |> safe_to_string()
-    "<label class=\\\"rev-InputLabel rev-SelectStack \\\">  <span class=\\\"rev-LabelText\\\">Greetings</span>\\n  <select class=\\\"rev-Select \\\" id=\\\"widget_required_string\\\" multiple=\\\"\\\" name=\\\"widget[required_string][]\\\" required><option value=\\\"hi\\\">Hi</option><option selected value=\\\"hello\\\">Hello</option></select>\\n  \\n  \\n</label>"
+    "<label class=\\\"rev-InputLabel rev-SelectStack  is-required\\\">  <span class=\\\"rev-LabelText\\\">Greetings</span>\\n  <select class=\\\"rev-Select \\\" id=\\\"widget_required_string\\\" multiple=\\\"\\\" name=\\\"widget[required_string][]\\\" required><option value=\\\"hi\\\">Hi</option><option selected value=\\\"hello\\\">Hello</option></select>\\n  \\n  \\n</label>"
 
     iex> multiple_select_stack(f, :required_string, ["Hi": "hi", "Hello": "hello"], input: [value: ["hi", "hello"]]) |> safe_to_string()
     "<label class=\\\"rev-InputLabel rev-SelectStack \\\">  \\n  <select class=\\\"rev-Select \\\" id=\\\"widget_required_string\\\" multiple=\\\"\\\" name=\\\"widget[required_string][]\\\"><option selected value=\\\"hi\\\">Hi</option><option selected value=\\\"hello\\\">Hello</option></select>\\n  \\n  \\n</label>"
